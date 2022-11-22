@@ -1,6 +1,6 @@
 package model.entities;
-
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Paciente implements Serializable {
 
@@ -9,12 +9,13 @@ public class Paciente implements Serializable {
 	private Long cpf;
 	private String nome;
 	private Long telefone;
-	private Integer idade;
+	private ArrayList<Serviço> serviços;
 	
 	public Paciente() {
 	}
 
 	public Paciente(Long cpf, String nome) {
+		serviços = new ArrayList<>();
 		this.cpf = cpf;
 		this.nome = nome;
 	}
@@ -33,6 +34,22 @@ public class Paciente implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Long getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(Long telefone) {
+		this.telefone = telefone;
+	}
+
+	public ArrayList<Serviço> getServiços() {
+		return serviços;
+	}
+
+	public void addServiço(Serviço serviço) {
+		serviços.add(serviço);
 	}
 
 	@Override

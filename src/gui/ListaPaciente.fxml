@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="373.0" prefWidth="527.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19">
+<VBox prefHeight="373.0" prefWidth="527.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListaPacienteController">
    <children>
-      <Label alignment="TOP_LEFT" prefHeight="0.0" prefWidth="160.0" text="Cadastro de Serviço">
+      <Label alignment="TOP_LEFT" prefHeight="0.0" prefWidth="160.0" text="Cadastro de Paciente">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -22,13 +21,15 @@
       </Label>
       <ToolBar prefHeight="0.0" prefWidth="543.0" snapToPixel="false">
         <items>
-          <Button mnemonicParsing="false" text="Novo" />
+          <Button fx:id="btNovo" mnemonicParsing="false" text="Novo" />
         </items>
       </ToolBar>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewPaciente" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Nome" />
-          <TableColumn prefWidth="75.0" text="Preço" />
+          <TableColumn fx:id="tableColumnNome" prefWidth="75.0" text="Nome" />
+          <TableColumn prefWidth="75.0" text="CPF" />
+            <TableColumn prefWidth="75.0" text="Telefone" />
+            <TableColumn prefWidth="75.0" text="Serviços" />
         </columns>
       </TableView>
    </children>
