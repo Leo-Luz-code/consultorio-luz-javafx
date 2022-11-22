@@ -25,7 +25,15 @@ public class MainViewController implements Initializable{
 	private MenuItem menuItemSobre;
 	
 	@FXML
+	private MenuItem menuItemServiço;
+	
+	@FXML
 	public void onMenuItemPacienteAction() {
+		loadView("/gui/ListaPaciente.fxml");
+	}
+	
+	@FXML
+	public void onMenuItemServicoAction() {
 		
 	}
 	
@@ -40,7 +48,7 @@ public class MainViewController implements Initializable{
 		
 	}
 
-	private void loadView(String absoluteName) {
+	private synchronized void loadView(String absoluteName) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
