@@ -29,12 +29,12 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemPacienteAction() {
-		loadView("/gui/ListaPaciente.fxml");
+		
 	}
 	
 	@FXML
 	public void onMenuItemServicoAction() {
-		
+		loadView("/gui/ListaServiço.fxml");
 	}
 	
 	@FXML
