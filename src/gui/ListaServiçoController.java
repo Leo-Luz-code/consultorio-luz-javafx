@@ -1,9 +1,12 @@
 package gui;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,9 +15,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.entities.Serviço;
+import model.services.ServiçoService;
 
 public class ListaServiçoController implements Initializable{
 
+	private ServiçoService service;
+	
 	@FXML
 	private TableView<Serviço> tableViewServiço;
 	
@@ -27,9 +33,15 @@ public class ListaServiçoController implements Initializable{
 	@FXML 
 	private Button btNovo;
 	
+	private ObservableList<Serviço> obsList;
+	
 	@FXML
 	public void onBtNovoAction() {
 		System.out.println("YES!");
+	}
+	
+	public void setServiçosService(ServiçoService service) {
+		this.service = service;
 	}
 	
 	@Override
@@ -38,10 +50,20 @@ public class ListaServiçoController implements Initializable{
 	}
 
 	private void initializeNodes() {
-		tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-		tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("Preço"));
+		tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		tableColumnPreço.setCellValueFactory(new PropertyValueFactory<>("preco"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewServiço.prefHeightProperty().bind(stage.heightProperty());
 	}
+	
+	public void updateTableView() {
+		if (service == null) {
+			throw new IllegalStateException("Nenhum serviço detectado");
+		}
+		List<Serviço> list = service.findAll();
+		obsList = FXCollections.observableArrayList(list);
+		tableViewServiço.setItems(obsList);
+	}
+	
 }

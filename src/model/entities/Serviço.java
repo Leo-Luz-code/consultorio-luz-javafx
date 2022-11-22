@@ -1,17 +1,30 @@
 package model.entities;
 
+import java.util.Date;
+
 public abstract class Serviço {
 	
 	private String nome;
 	private Double preco;
+	private Date dataAtendimento;
 	
 	public Serviço() {
 	}
 
-	public Serviço(String nome, Double preco) {
-		super();
+	public abstract Double precoTotal();
+	
+	public Serviço(String nome, Double preco, Date dataAtendimento) {
 		this.nome = nome;
 		this.preco = preco;
+		this.dataAtendimento = dataAtendimento;
+	}
+	
+	public Date getDataAtendimento() {
+		return dataAtendimento;
+	}
+
+	public void setDataAtendimento(Date dataAtendimento) {
+		this.dataAtendimento = dataAtendimento;
 	}
 
 	public String getNome() {
@@ -28,11 +41,6 @@ public abstract class Serviço {
 
 	public void setPreco(Double preco) {
 		this.preco = preco;
-	}
-
-	@Override
-	public String toString() {
-		return "Serviço [nome=" + nome + ", preco=" + preco + "]";
 	}
 	
 }
