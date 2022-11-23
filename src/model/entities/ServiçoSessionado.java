@@ -18,6 +18,10 @@ public class ServiçoSessionado extends Serviço {
 		this.precoSessao = precoSessao;
 	}
 
+	public ServiçoSessionado(String nome) {
+		super(nome);
+	}
+
 	public Integer getSessoes() {
 		return sessoes;
 	}

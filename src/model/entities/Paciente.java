@@ -5,13 +5,14 @@ import java.util.ArrayList;
 public class Paciente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	private Long cpf;
 	private String nome;
 	private Long telefone;
 	private ArrayList<Serviço> serviços;
 	
-	public Paciente() {
+	public Paciente(String nome) {
+		this.nome=nome;
 	}
 
 	public Paciente(Long cpf, String nome) {
@@ -71,6 +72,6 @@ public class Paciente implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Paciente [id=" + cpf + ", name=" + nome + "]";
+		return nome;
 	}
 }

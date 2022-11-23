@@ -10,4 +10,5 @@ public interface IServiço{
     public Serviço readServiço(String nome);
     public void updateServiço(Serviço serviço);
     public void deleteServiço(Serviço serviço);
+    public boolean checaServiço(Serviço serviço);
 }

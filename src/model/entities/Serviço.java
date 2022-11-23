@@ -11,7 +11,8 @@ public abstract class Serviço implements Serializable {
 	private Double preco;
 	private Date dataAtendimento;
 	
-	public Serviço() {
+	public Serviço(String nome) {
+		this.nome=nome;
 	}
 
 	public abstract Double precoTotal();
@@ -45,5 +46,12 @@ public abstract class Serviço implements Serializable {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
+
+	@Override
+	public String toString() {
+		return nome;
+	}
+	
+	
 	
 }

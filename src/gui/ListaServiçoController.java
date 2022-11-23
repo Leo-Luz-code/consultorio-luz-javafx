@@ -37,7 +37,7 @@ public class ListaServiçoController implements Initializable{
 		System.out.println("YES!");
 	}
 	
-	public void setServiçosService(ServiçoService service) {
+	public void setServiçoService(ServiçoService service) {
 		this.service = service;
 	}
 	
@@ -55,9 +55,6 @@ public class ListaServiçoController implements Initializable{
 	}
 	
 	public void updateTableView() {
-		if (service == null) {
-			throw new IllegalStateException("Nenhum serviço detectado");
-		}
 		List<Serviço> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewServiço.setItems(obsList);

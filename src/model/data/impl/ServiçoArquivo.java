@@ -7,12 +7,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.data.IServiço;
 import model.entities.Serviço;
-
 
 public class ServiçoArquivo implements IServiço {
 	String arquivo="serviços.ser";
@@ -43,18 +43,31 @@ public class ServiçoArquivo implements IServiço {
 	}
 
 	@Override
-	public void createServiço(Serviço serviço) {
+	public void createServiço(Serviço serviço) { 
 		FileOutputStream fluxo;
         try {
+        	ArrayList <Serviço> serviços;
+            boolean achou=false;
+            serviços = (ArrayList<Serviço>) getAllServiços();
+             for (int i=0; i<serviços.size(); i++){
+                 if (serviço.getDataAtendimento()== serviços.get(i).getDataAtendimento()){
+                     achou=true;
+                     break;
+                 }
+             }
+            if (achou){
+                throw new IOException("Serviço já está cadastrado");
+            }
+        	
             fluxo = new FileOutputStream(arquivo, true);
             ObjectOutputStream gravarObj = new ObjectOutputStream(fluxo);
             gravarObj.writeObject(serviço);
             gravarObj.close();
         } catch (FileNotFoundException e){
-            System.out.println("Erro no cadastro do serviço");
+            e.printStackTrace();
         }
         catch (IOException ex){
-            System.out.println ("Erro no cadastro do serviço");
+            ex.printStackTrace();
         }
 	}
 
@@ -132,6 +145,16 @@ public class ServiçoArquivo implements IServiço {
                System.out.println ("Erro ao remover o serviço");
            }
        }
+	}
+
+	@Override
+	public boolean checaServiço(Serviço serviço) {
+		for (int i = 0; i < getAllServiços().size(); i++) {
+			if (getAllServiços().get(i).getNome() == serviço.getNome()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

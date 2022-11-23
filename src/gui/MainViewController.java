@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.services.AtendimentoService;
 import model.services.ServiçoService;
 
 public class MainViewController implements Initializable{
@@ -29,6 +30,9 @@ public class MainViewController implements Initializable{
 	private MenuItem menuItemServiço;
 	
 	@FXML
+	private MenuItem menuItemAtendimento;
+	
+	@FXML
 	public void onMenuItemPacienteAction() {
 		loadView("/gui/ListaPaciente.fxml");
 	}
@@ -36,6 +40,11 @@ public class MainViewController implements Initializable{
 	@FXML
 	public void onMenuItemServicoAction() {
 		loadView2("/gui/ListaServiço.fxml");
+	}
+	
+	@FXML
+	public void onMenuItemAtendimentoAction() {
+		loadView3("/gui/ListaAtendimento.fxml");
 	}
 	
 	@FXML
@@ -81,10 +90,32 @@ public class MainViewController implements Initializable{
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 			
 			ListaServiçoController controller = loader.getController();
-			controller.setServiçosService(new ServiçoService());
+			controller.setServiçoService(new ServiçoService());
 			controller.updateTableView();
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Erro carregando a página", e.getMessage(), AlertType.ERROR);
 		}
 	}
+	
+	private synchronized void loadView3(String absoluteName) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
+			ListaAtendimentoController controller = loader.getController();
+			controller.setAtendimentoService(new AtendimentoService());
+			controller.updateTableView();
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "Erro carregando a página", e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
 }
