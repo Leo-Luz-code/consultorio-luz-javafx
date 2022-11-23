@@ -1,8 +1,11 @@
 package model.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Serviço {
+public abstract class Serviço implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String nome;
 	private Double preco;

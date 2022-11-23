@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class ServiçoSessionado extends Serviço {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer sessoes;
 	private Double precoSessao;
 	private ArrayList<Date> dataSessoes;

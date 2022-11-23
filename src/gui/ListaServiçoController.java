@@ -27,9 +27,6 @@ public class ListaServiçoController implements Initializable{
 	@FXML
 	private TableColumn<Serviço, String> tableColumnNome;
 	
-	@FXML
-	private TableColumn<Serviço, Double> tableColumnPreço;
-	
 	@FXML 
 	private Button btNovo;
 	
@@ -51,10 +48,10 @@ public class ListaServiçoController implements Initializable{
 
 	private void initializeNodes() {
 		tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		tableColumnPreço.setCellValueFactory(new PropertyValueFactory<>("preco"));
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewServiço.prefHeightProperty().bind(stage.heightProperty());
+		tableColumnNome.prefWidthProperty().bind(tableViewServiço.widthProperty());
 	}
 	
 	public void updateTableView() {

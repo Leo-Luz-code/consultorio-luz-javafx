@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="373.0" prefWidth="527.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListaServiçoController">
+<VBox prefHeight="412.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListaServiçoController">
    <children>
-      <Label alignment="TOP_LEFT" prefHeight="0.0" prefWidth="160.0" text="Cadastro de Serviço">
+      <Label alignment="TOP_LEFT" prefHeight="0.0" prefWidth="160.0" text="Serviços">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -26,8 +26,7 @@
       </ToolBar>
       <TableView fx:id="tableViewServiço" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnNome" prefWidth="75.0" text="Nome" />
-          <TableColumn fx:id="tableColumnPreço" prefWidth="75.0" text="Preço" />
+          <TableColumn fx:id="tableColumnNome" prefWidth="120.0" text="Nome" />
         </columns>
       </TableView>
    </children>
