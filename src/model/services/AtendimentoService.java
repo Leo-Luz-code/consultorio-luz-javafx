@@ -15,4 +15,13 @@ public class AtendimentoService {
 	public List<Atendimento> findAll() {
 		return service.getAllAtendimentos();
 	}
+	
+	public void saveOrUpdate(Atendimento atendimento) {
+		if(atendimento.getId() == null) {
+			service.createAtendimento(atendimento);
+		} else {
+			service.updateAtendimento(atendimento);
+		}
+	}
+	
 }

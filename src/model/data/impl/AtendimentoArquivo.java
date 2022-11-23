@@ -10,13 +10,15 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import gui.util.Alerts;
+import javafx.scene.control.Alert.AlertType;
 import model.data.IAtendimento;
 import model.entities.Atendimento;
 
 public class AtendimentoArquivo implements IAtendimento {
 
 	String arquivo = "atendimentos.ser";
-
+	
 	@Override
 	public List<Atendimento> getAllAtendimentos() {
 		ArrayList<Atendimento> Atendimentos = new ArrayList<>();
@@ -31,11 +33,11 @@ public class AtendimentoArquivo implements IAtendimento {
 			}
 			lerObj.close();
 		} catch (EOFException e) {
-			System.out.println("Erro de fim de arquivo");
+			Alerts.showAlert("Erro de fim de arquivo", null, e.getMessage(), AlertType.ERROR);
 		} catch (FileNotFoundException e) {
-			System.out.println("Erro ao listar as disciplinas");
-		} catch (IOException | ClassNotFoundException ex) {
-			System.out.println("Erro ao listar as disciplinas");
+			Alerts.showAlert("Erro ao listar os atendimentos", null, e.getMessage(), AlertType.ERROR);
+		} catch (IOException | ClassNotFoundException e) {
+			Alerts.showAlert("Erro ao listar os atendimentos", null, e.getMessage(), AlertType.ERROR);
 		}
 		return Atendimentos;
 	}
@@ -49,9 +51,9 @@ public class AtendimentoArquivo implements IAtendimento {
 			gravarObj.writeObject(Atendimento);
 			gravarObj.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Erro no cadastro da disciplina");
-		} catch (IOException ex) {
-			System.out.println("Erro no cadastro da disciplina");
+			Alerts.showAlert("Erro no cadastro do atendimento", null, e.getMessage(), AlertType.ERROR);
+		} catch (IOException e) {
+			Alerts.showAlert("Erro no cadastro do atendimento", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 
@@ -91,9 +93,9 @@ public class AtendimentoArquivo implements IAtendimento {
 				}
 				gravarObj.close();
 			} catch (FileNotFoundException e) {
-				System.out.println("Erro na atualização do Atendimento");
-			} catch (IOException ex) {
-				System.out.println("Erro na atualização do Atendimento");
+				Alerts.showAlert("Erro na atualização do Atendimento", null, e.getMessage(), AlertType.ERROR);
+			} catch (IOException e) {
+				Alerts.showAlert("Erro na atualização do Atendimento", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}
@@ -120,9 +122,9 @@ public class AtendimentoArquivo implements IAtendimento {
 				}
 				gravarObj.close();
 			} catch (FileNotFoundException e) {
-				System.out.println("Erro ao remover o Atendimento");
-			} catch (IOException ex) {
-				System.out.println("Erro ao remover o Atendimento");
+				Alerts.showAlert("Erro ao remover o Atendimento", null, e.getMessage(), AlertType.ERROR);
+			} catch (IOException e) {
+				Alerts.showAlert("Erro ao remover o Atendimento", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}

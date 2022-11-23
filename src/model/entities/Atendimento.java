@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import model.data.IAtendimento;
+import model.data.impl.AtendimentoArquivo;
+
 public class Atendimento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

@@ -39,7 +39,7 @@ public class ListaAtendimentoController implements Initializable{
 	
 	@FXML
 	private TableColumn<Atendimento, Integer> tableColumnId;
-	
+
 	@FXML
 	private TableColumn<Atendimento, Paciente> tableColumnPaciente;
 	
@@ -93,6 +93,7 @@ public class ListaAtendimentoController implements Initializable{
 			
 			AtendimentoFormController controller = loader.getController();
 			controller.setAtendimento(obj);
+			controller.setAtendimentoService(new AtendimentoService());
 			controller.updateFormData(); 
 			
 			Stage dialogStage = new Stage();

@@ -4,15 +4,23 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import gui.util.Constraints;
+import gui.util.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Atendimento;
+import model.entities.Paciente;
+import model.entities.Serviço;
+import model.entities.ServiçoUnico;
+import model.services.AtendimentoService;
 
 public class AtendimentoFormController implements Initializable {
 
+	private AtendimentoService service;
+	
 	private Atendimento entity;
 	
 	@FXML
@@ -43,13 +51,35 @@ public class AtendimentoFormController implements Initializable {
 	private Button btCancelar;
 	
 	@FXML
-	public void onBtSalvarAction() {
-		
+	public void onBtSalvarAction(ActionEvent event) {
+		if (entity == null) {
+			throw new IllegalStateException("Atendimento nulo");
+		}
+		if (service == null){
+			throw new IllegalStateException("AtendimentoService nulo");
+		}
+			entity = getFormData();
+			service.saveOrUpdate(entity);
+			Utils.currentStage(event).close();
+	}	
+	
+	private Atendimento getFormData() {
+		Atendimento atd = new Atendimento();
+		atd.setId(Utils.tryParseToInt(txtId.getText()));
+		Paciente pct = new Paciente(txtNome.getText());
+		Serviço svc = new ServiçoUnico(txtServiço.getText());
+		atd.setPaciente(pct);
+		atd.setServiço(svc);
+		return atd;
+	}
+
+	@FXML
+	public void onBtCancelarAction(ActionEvent event) {
+		Utils.currentStage(event).close();
 	}
 	
-	@FXML
-	public void onBtCancelarAction() {
-		
+	public void setAtendimentoService(AtendimentoService service) {
+		this.service=service;
 	}
 	
 	public void setAtendimento(Atendimento entity) {
