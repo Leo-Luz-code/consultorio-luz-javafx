@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 import model.entities.Atendimento;
 import model.entities.Paciente;
 import model.entities.Serviço;
+import model.entities.ServiçoUnico;
 import model.services.AtendimentoService;
 
 public class ListaAtendimentoController implements Initializable{
@@ -56,7 +57,8 @@ public class ListaAtendimentoController implements Initializable{
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/AtendimentoForm.fxml", parentStage);
+		Atendimento obj = new Atendimento(new Paciente(""), new ServiçoUnico(""), new Date());
+		createDialogForm(obj, "/gui/AtendimentoForm.fxml", parentStage);
 	}
 	
 	public void setAtendimentoService(AtendimentoService service) {
@@ -84,10 +86,14 @@ public class ListaAtendimentoController implements Initializable{
 		tableViewAtendimento.setItems(obsList);
 	}
 	
-	private void createDialogForm(String absoluteName, Stage parentStage) {
+	private void createDialogForm(Atendimento obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
+			
+			AtendimentoFormController controller = loader.getController();
+			controller.setAtendimento(obj);
+			controller.updateFormData(); 
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Digite os dados do atendimento");

@@ -21,6 +21,10 @@ public class Paciente implements Serializable {
 		this.nome = nome;
 	}
 
+	public Paciente() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getCpf() {
 		return cpf;
 	}

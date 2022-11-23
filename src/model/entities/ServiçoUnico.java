@@ -13,6 +13,14 @@ public class ServiçoUnico extends Serviço {
 		this.dataServiço = dataServiço;
 	}
 
+	public ServiçoUnico() {
+		super();
+	}
+
+	public ServiçoUnico(String nome) {
+		super(nome);
+	}
+
 	public Date getDataServiço() {
 		return dataServiço;
 	}

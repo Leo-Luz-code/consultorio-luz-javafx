@@ -21,6 +21,15 @@ public class Atendimento implements Serializable {
 		this.dataAtendimento = dataAtendimento;
 	}
 
+	public Atendimento() {
+	}
+
+	public Atendimento(Paciente paciente, ServiçoUnico serviçoUnico, Date date) {
+		this.paciente = paciente;
+		this.serviço = serviçoUnico;
+		this.dataAtendimento = date;
+	}
+
 	public Integer getId() {
 		return id;
 	}

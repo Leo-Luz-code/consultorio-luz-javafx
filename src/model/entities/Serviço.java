@@ -23,6 +23,10 @@ public abstract class Serviço implements Serializable {
 		this.dataAtendimento = dataAtendimento;
 	}
 	
+	public Serviço() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Date getDataAtendimento() {
 		return dataAtendimento;
 	}
