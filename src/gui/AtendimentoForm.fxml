@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane prefHeight="213.0" prefWidth="516.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19">
+<AnchorPane prefHeight="204.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AtendimentoFormController">
    <children>
       <GridPane layoutX="33.0" layoutY="21.0" prefHeight="109.0" prefWidth="425.0" AnchorPane.leftAnchor="33.0" AnchorPane.topAnchor="21.0">
         <columnConstraints>
@@ -28,20 +27,20 @@
             <Label text="Nome do paciente" GridPane.rowIndex="1" />
             <Label text="Serviço prestado" GridPane.rowIndex="2" />
             <Label text="Data do atendimento" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtNome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtServiço" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtData" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label prefHeight="11.0" prefWidth="99.0" text="ID" />
-            <TextField editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="txtId" editable="false" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <HBox layoutX="146.0" layoutY="140.0" prefHeight="59.0" prefWidth="200.0" spacing="5.0">
          <children>
-            <Button mnemonicParsing="false" text="Salvar" />
-            <Button mnemonicParsing="false" text="Cancelar" />
+            <Button fx:id="btSalvar" mnemonicParsing="false" onAction="#onBtSalvarAction" text="Salvar" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtSalvarAction" text="Cancelar" />
          </children>
       </HBox>
    </children>

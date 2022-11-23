@@ -50,10 +50,10 @@ public class PacienteArquivo implements IPaciente {
             gravarObj.writeObject(paciente);
             gravarObj.close();
         } catch (FileNotFoundException e){
-            System.out.println("Erro no cadastro da disciplina");
+            System.out.println("Erro no cadastro do paciente");
         }
         catch (IOException ex){
-            System.out.println ("Erro no cadastro da disciplina");
+            System.out.println ("Erro no cadastro do paciente");
         }
     }
 
