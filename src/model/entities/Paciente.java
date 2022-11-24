@@ -1,6 +1,6 @@
 package model.entities;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Date;
 
 public class Paciente implements Serializable {
 
@@ -9,16 +9,18 @@ public class Paciente implements Serializable {
 	private Long cpf;
 	private String nome;
 	private Long telefone;
-	private ArrayList<Serviço> serviços;
+	private Serviço serviço;
+	private Date dataCadastro;
 	
 	public Paciente(String nome) {
 		this.nome=nome;
 	}
 
-	public Paciente(Long cpf, String nome) {
-		serviços = new ArrayList<>();
+	public Paciente(Long cpf, String nome, Long telefone, Serviço serviço) {
+		this.serviço = serviço;
 		this.cpf = cpf;
 		this.nome = nome;
+		this.telefone = telefone;
 	}
 
 	public Paciente() {
@@ -49,14 +51,6 @@ public class Paciente implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public ArrayList<Serviço> getServiços() {
-		return serviços;
-	}
-
-	public void addServiço(Serviço serviço) {
-		serviços.add(serviço);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -77,5 +71,21 @@ public class Paciente implements Serializable {
 	@Override
 	public String toString() {
 		return nome;
+	}
+
+	public Serviço getServiço() {
+		return serviço;
+	}
+
+	public void setServiço(Serviço serviço) {
+		this.serviço = serviço;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 }
