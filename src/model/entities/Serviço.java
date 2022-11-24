@@ -9,7 +9,6 @@ public abstract class Serviço implements Serializable {
 	
 	private String nome;
 	private Double preco;
-	private Date dataAtendimento;
 	
 	public Serviço(String nome) {
 		this.nome=nome;
@@ -17,27 +16,13 @@ public abstract class Serviço implements Serializable {
 
 	public abstract Double precoTotal();
 	
-	public Serviço(String nome, Double preco, Date dataAtendimento) {
+	public Serviço(String nome, Double preco) {
 		this.nome = nome;
 		this.preco = preco;
-		this.dataAtendimento = dataAtendimento;
 	}
 	
 	public Serviço() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public Serviço(String nome2, Double preço) {
-		this.nome=nome2;
-		this.preco = preço;
-	}
-
-	public Date getDataAtendimento() {
-		return dataAtendimento;
-	}
-
-	public void setDataAtendimento(Date dataAtendimento) {
-		this.dataAtendimento = dataAtendimento;
 	}
 
 	public String getNome() {

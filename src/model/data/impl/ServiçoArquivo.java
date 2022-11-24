@@ -50,7 +50,7 @@ public class ServiçoArquivo implements IServiço {
             boolean achou=false;
             serviços = (ArrayList<Serviço>) getAllServiços();
              for (int i=0; i<serviços.size(); i++){
-                 if (serviço.getDataAtendimento()== serviços.get(i).getDataAtendimento()){
+                 if (serviço.getPreco()== serviços.get(i).getPreco()){
                      achou=true;
                      break;
                  }

@@ -73,6 +73,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 		Stage parentStage = Utils.currentStage(event);
 		Atendimento obj = new Atendimento(new Paciente(""), new ServiçoUnico("", null), new Date());
 		createDialogForm(obj, "/gui/AtendimentoForm.fxml", parentStage);
+
 	}
 
 	public void setAtendimentoService(AtendimentoService service) {
@@ -131,7 +132,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 
 	protected void removeEntity(Atendimento obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("Confirmação", "Tem certeza que quer fazer isso?");
-		
+
 		if (result.get() == ButtonType.OK) {
 			if (service == null) {
 				throw new IllegalStateException("Serviço de atendimento nulo");
@@ -139,6 +140,43 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 			service.remove(obj);
 			updateTableView();
 		}
+	}
+
+	private void initEditButtons() {
+		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEDIT.setCellFactory(param -> new TableCell<Atendimento, Atendimento>() {
+			private final Button button = new Button("edit");
+
+			@Override
+			protected void updateItem(Atendimento obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(
+						event -> createDialogForm(obj, "/gui/AtendimentoForm.fxml", Utils.currentStage(event)));
+			}
+		});
+	}
+
+	private void initRemoveButtons() {
+		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnREMOVE.setCellFactory(param -> new TableCell<Atendimento, Atendimento>() {
+			private final Button button = new Button("remove");
+
+			@Override
+			protected void updateItem(Atendimento obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> removeEntity(obj));
+			}
+		});
 	}
 
 }

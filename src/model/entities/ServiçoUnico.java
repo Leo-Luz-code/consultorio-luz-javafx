@@ -9,7 +9,7 @@ public class ServiçoUnico extends Serviço {
 	private Date dataServiço;
 	
 	public ServiçoUnico(String nome, Double preco, Date dataAtendimento, Date dataServiço) {
-		super(nome, preco, dataAtendimento);
+		super(nome, preco);
 		this.dataServiço = dataServiço;
 	}
 

@@ -1,6 +1,5 @@
 package model.entities;
 import java.io.Serializable;
-import java.util.Date;
 
 public class Paciente implements Serializable {
 
@@ -9,15 +8,13 @@ public class Paciente implements Serializable {
 	private Long cpf;
 	private String nome;
 	private Long telefone;
-	private Serviço serviço;
-	private Date dataCadastro;
+	private String data;
 	
 	public Paciente(String nome) {
 		this.nome=nome;
 	}
 
-	public Paciente(Long cpf, String nome, Long telefone, Serviço serviço) {
-		this.serviço = serviço;
+	public Paciente(Long cpf, String nome, Long telefone) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.telefone = telefone;
@@ -73,19 +70,11 @@ public class Paciente implements Serializable {
 		return nome;
 	}
 
-	public Serviço getServiço() {
-		return serviço;
+	public String getData() {
+		return data;
 	}
 
-	public void setServiço(Serviço serviço) {
-		this.serviço = serviço;
-	}
-
-	public Date getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(Date dataCadastro) {
-		this.dataCadastro = dataCadastro;
+	public void setData(String data) {
+		this.data = data;
 	}
 }

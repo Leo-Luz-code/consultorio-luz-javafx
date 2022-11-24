@@ -11,7 +11,7 @@
 
 <VBox prefHeight="373.0" prefWidth="527.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListaPacienteController">
    <children>
-      <Label alignment="TOP_LEFT" prefHeight="0.0" prefWidth="160.0" text="Cadastro">
+      <Label alignment="TOP_LEFT" prefHeight="0.0" prefWidth="160.0" text="Pacientes">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -28,9 +28,9 @@
         <columns>
           <TableColumn fx:id="tableColumnNome" prefWidth="91.0" text="Nome" />
           <TableColumn fx:id="tableColumnCpf" prefWidth="98.0" text="CPF" />
-            <TableColumn prefWidth="100.0" text="Telefone" />
-            <TableColumn fx:id="tableColumnServiço" prefWidth="100.0" text="Serviço" />
-            <TableColumn fx:id="tableColumnData" prefWidth="100.0" text="Data de cadastro" />
+            <TableColumn fx:id="tableColumnTelefone" prefWidth="100.0" text="Telefone" />
+            <TableColumn fx:id="tableColumnData" prefWidth="111.0" text="Data de cadastro" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
         </columns>
       </TableView>
    </children>

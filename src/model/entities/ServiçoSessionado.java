@@ -12,7 +12,7 @@ public class ServiçoSessionado extends Serviço {
 	private ArrayList<Date> dataSessoes;
 
 	public ServiçoSessionado(String nome, Double precoInicial, Date dataAtendimento, Integer sessoes, Double precoSessao) {
-		super(nome, precoInicial, dataAtendimento);
+		super(nome, precoInicial);
 		dataSessoes = new ArrayList<>();
 		this.sessoes = sessoes;
 		this.precoSessao = precoSessao;

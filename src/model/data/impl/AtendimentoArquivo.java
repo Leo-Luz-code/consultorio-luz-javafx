@@ -18,7 +18,7 @@ import model.entities.Atendimento;
 public class AtendimentoArquivo implements IAtendimento {
 
 	String arquivo = "atendimentos.ser";
-	
+
 	@Override
 	public List<Atendimento> getAllAtendimentos() {
 		ArrayList<Atendimento> Atendimentos = new ArrayList<>();
@@ -43,17 +43,30 @@ public class AtendimentoArquivo implements IAtendimento {
 	}
 
 	@Override
-	public void createAtendimento(Atendimento Atendimento) {
+	public void createAtendimento(Atendimento serviço) {
 		FileOutputStream fluxo;
 		try {
+			ArrayList<Atendimento> serviços;
+			boolean achou = false;
+			serviços = (ArrayList<Atendimento>) getAllAtendimentos();
+			for (int i = 0; i < serviços.size(); i++) {
+				if (serviço.getId() == serviços.get(i).getId()) {
+					achou = true;
+					break;
+				}
+			}
+			if (achou) {
+				throw new IOException("Atendimento já está cadastrado");
+			}
+
 			fluxo = new FileOutputStream(arquivo, true);
 			ObjectOutputStream gravarObj = new ObjectOutputStream(fluxo);
-			gravarObj.writeObject(Atendimento);
+			gravarObj.writeObject(serviço);
 			gravarObj.close();
 		} catch (FileNotFoundException e) {
-			Alerts.showAlert("Erro no cadastro do atendimento", null, e.getMessage(), AlertType.ERROR);
-		} catch (IOException e) {
-			Alerts.showAlert("Erro no cadastro do atendimento", null, e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 
