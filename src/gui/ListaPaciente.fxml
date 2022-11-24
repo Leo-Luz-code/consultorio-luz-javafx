@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="373.0" prefWidth="527.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListaPacienteController">
+<VBox prefHeight="373.0" prefWidth="563.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListaPacienteController">
    <children>
       <Label alignment="TOP_LEFT" prefHeight="0.0" prefWidth="160.0" text="Pacientes">
          <font>
@@ -21,7 +21,7 @@
       </Label>
       <ToolBar prefHeight="0.0" prefWidth="543.0" snapToPixel="false">
         <items>
-          <Button fx:id="btNovo" mnemonicParsing="false" text="Novo" />
+          <Button fx:id="btNovo" mnemonicParsing="false" onAction="#onBtNovoAction" text="Novo" />
         </items>
       </ToolBar>
       <TableView fx:id="tableViewPaciente" prefHeight="200.0" prefWidth="200.0">
@@ -31,6 +31,7 @@
             <TableColumn fx:id="tableColumnTelefone" prefWidth="100.0" text="Telefone" />
             <TableColumn fx:id="tableColumnData" prefWidth="111.0" text="Data de cadastro" />
             <TableColumn fx:id="tableColumnREMOVE" prefWidth="75.0" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="75.0" />
         </columns>
       </TableView>
    </children>

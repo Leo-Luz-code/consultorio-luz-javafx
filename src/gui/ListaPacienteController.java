@@ -110,47 +110,47 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 		});
 	}
 	
-//	private void createDialogForm(Paciente obj, String absoluteName, Stage parentStage) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//			Pane pane = loader.load();
-//
-//			PacienteFormController controller = loader.getController();
-//			controller.setPaciente(obj);
-//			controller.setPacienteService(new PacienteService());
-//			controller.subscribeDataChangeListener(this);
-//			controller.updateFormData();
-//
-//			Stage dialogStage = new Stage();
-//			dialogStage.setTitle("Digite os dados do atendimento");
-//			dialogStage.setScene(new Scene(pane));
-//			dialogStage.setResizable(false);
-//			dialogStage.initOwner(parentStage);
-//			dialogStage.initModality(Modality.WINDOW_MODAL);
-//			dialogStage.showAndWait();
-//		} catch (IOException e) {
-//			Alerts.showAlert("IO Exception", "Erro carregando página", e.getMessage(), AlertType.ERROR);
-//		}
-//	}
+	private void createDialogForm(Paciente obj, String absoluteName, Stage parentStage) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			Pane pane = loader.load();
 
-//	private void initEditButtons() {
-//		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-//		tableColumnEDIT.setCellFactory(param -> new TableCell<Paciente, Paciente>() {
-//			private final Button button = new Button("edit");
-//
-//			@Override
-//			protected void updateItem(Paciente obj, boolean empty) {
-//				super.updateItem(obj, empty);
-//				if (obj == null) {
-//					setGraphic(null);
-//					return;
-//				}
-//				setGraphic(button);
-//				button.setOnAction(
-//						event -> createDialogForm(obj, "/gui/PacienteForm.fxml", Utils.currentStage(event)));
-//			}
-//		});
-//	}
+			PacienteFormController controller = loader.getController();
+			controller.setPaciente(obj);
+			controller.setPacienteService(new PacienteService());
+			controller.subscribeDataChangeListener(this);
+			controller.updateFormData();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Digite os dados do paciente");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "Erro carregando página", e.getMessage(), AlertType.ERROR);
+		}
+	}
+
+	private void initEditButtons() {
+		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEDIT.setCellFactory(param -> new TableCell<Paciente, Paciente>() {
+			private final Button button = new Button("edit");
+
+			@Override
+			protected void updateItem(Paciente obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(
+						event -> createDialogForm(obj, "/gui/PacienteForm.fxml", Utils.currentStage(event)));
+			}
+		});
+	}
 
 	protected void removeEntity(Paciente obj) {
 		service.remove(obj);

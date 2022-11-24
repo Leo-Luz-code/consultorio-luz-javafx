@@ -15,10 +15,10 @@ public class Atendimento implements Serializable {
 	private Paciente paciente;
 	private Double valorCobrado;
 	private Serviço serviço;
-	private Date dataAtendimento;
+	private String dataAtendimento;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
-	public Atendimento(Integer id, Paciente paciente, Serviço serviço, Date dataAtendimento) {
+	public Atendimento(Integer id, Paciente paciente, Serviço serviço, String dataAtendimento) {
 		this.id = id;
 		this.paciente = paciente;
 		this.serviço = serviço;
@@ -28,7 +28,7 @@ public class Atendimento implements Serializable {
 	public Atendimento() {
 	}
 
-	public Atendimento(Paciente paciente, ServiçoUnico serviçoUnico, Date date) {
+	public Atendimento(Paciente paciente, ServiçoUnico serviçoUnico, String date) {
 		this.paciente = paciente;
 		this.serviço = serviçoUnico;
 		this.dataAtendimento = date;
@@ -59,12 +59,12 @@ public class Atendimento implements Serializable {
 		this.serviço = serviço;
 	}
 
-	public Date getDataAtendimento() {
+	public String getDataAtendimento() {
 		return dataAtendimento;
 	}
 
-	public void setDataAtendimento(Date dataAtendimento) {
-		this.dataAtendimento = dataAtendimento;
+	public void setDataAtendimento(String string) {
+		this.dataAtendimento = string;
 	}
 
 	public Double getValorCobrado() {

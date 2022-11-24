@@ -58,7 +58,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	private TableColumn<Atendimento, Serviço> tableColumnServiço;
 
 	@FXML
-	private TableColumn<Atendimento, Date> tableColumnData;
+	private TableColumn<Atendimento, String> tableColumnData;
 
 	@FXML
 	private TableColumn<Atendimento, Atendimento> tableColumnEDIT;
@@ -71,7 +71,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		Atendimento obj = new Atendimento(new Paciente(""), new ServiçoUnico("", null), new Date());
+		Atendimento obj = new Atendimento(new Paciente(""), new ServiçoUnico("", null), "");
 		createDialogForm(obj, "/gui/AtendimentoForm.fxml", parentStage);
 
 	}
