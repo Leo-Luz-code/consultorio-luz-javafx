@@ -15,6 +15,5 @@ public interface IAtendimento {
 	public void updateAtendimento(Atendimento atendimento);
 
 	public void deleteAtendimento(Atendimento atendimento);
-	
-	public boolean checkAtendimento(Atendimento atendimento);
+
 }

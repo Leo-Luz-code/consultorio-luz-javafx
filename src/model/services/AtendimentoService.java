@@ -16,13 +16,20 @@ public class AtendimentoService {
 		return service.getAllAtendimentos();
 	}
 	
+	public void remove(Atendimento atendimento) {
+		service.deleteAtendimento(atendimento);
+	}
+	
+	
 	public void saveOrUpdate(Atendimento atendimento) {
 		if(atendimento.getId() == null) {
 			int id = findAll().size();
 			atendimento.setId(id);
 			service.createAtendimento(atendimento);
 		} else {
-			findAll().remove(atendimento.getId());
+			int id = findAll().size();
+			atendimento.setId(id);
+			remove(atendimento);
 			service.createAtendimento(atendimento);
 		}
 	}

@@ -106,7 +106,7 @@ public class AtendimentoArquivo implements IAtendimento {
 		boolean achou = false;
 		Atendimentos = (ArrayList<Atendimento>) getAllAtendimentos();
 		for (int i = 0; i < Atendimentos.size(); i++) {
-			if (Atendimento.getId() == Atendimentos.get(i).getId()) {
+			if (Atendimento.getPaciente().getNome() == Atendimentos.get(i).getPaciente().getNome()) {
 				Atendimentos.remove(i);
 				achou = true;
 				break;
@@ -127,16 +127,6 @@ public class AtendimentoArquivo implements IAtendimento {
 				Alerts.showAlert("Erro ao remover o Atendimento", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
-	}
-
-	@Override
-	public boolean checkAtendimento(Atendimento atendimento) {
-		for (int i = 0; i < getAllAtendimentos().size(); i++) {
-			if (getAllAtendimentos().get(i).getPaciente().getNome()== atendimento.getPaciente().getNome()) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
@@ -20,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -45,6 +47,9 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 
 	@FXML
 	private TableColumn<Atendimento, Double> tableColumnPreço;
+
+	@FXML
+	private TableColumn<Atendimento, Atendimento> tableColumnREMOVE;
 
 	@FXML
 	private TableColumn<Atendimento, Paciente> tableColumnPaciente;
@@ -94,7 +99,6 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 		List<Atendimento> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewAtendimento.setItems(obsList);
-		initEditButtons();
 	}
 
 	private void createDialogForm(Atendimento obj, String absoluteName, Stage parentStage) {
@@ -125,24 +129,16 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 		updateTableView();
 	}
 
-	private void initEditButtons() {
-		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEDIT.setCellFactory(param -> new TableCell<Atendimento, Atendimento>() {
-			private final Button button = new Button("Editar");
-
-			@Override
-			protected void updateItem(Atendimento obj, boolean empty) {
-				super.updateItem(obj, empty);
-				if (obj == null) {
-					setGraphic(null);
-					return;
-				}
-				
-				setGraphic(button);
-				button.setOnAction(
-						event -> createDialogForm(obj, "/gui/AtendimentoForm.fxml", Utils.currentStage(event)));
+	protected void removeEntity(Atendimento obj) {
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmação", "Tem certeza que quer fazer isso?");
+		
+		if (result.get() == ButtonType.OK) {
+			if (service == null) {
+				throw new IllegalStateException("Serviço de atendimento nulo");
 			}
-		});
+			service.remove(obj);
+			updateTableView();
+		}
 	}
 
 }
