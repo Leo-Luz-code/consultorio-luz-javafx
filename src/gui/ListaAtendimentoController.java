@@ -10,6 +10,7 @@ import application.Main;
 import gui.listener.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -31,44 +33,47 @@ import model.entities.Serviço;
 import model.entities.ServiçoUnico;
 import model.services.AtendimentoService;
 
-public class ListaAtendimentoController implements Initializable, DataChangeListener{
+public class ListaAtendimentoController implements Initializable, DataChangeListener {
 
 	private AtendimentoService service;
-	
+
 	@FXML
 	private TableView<Atendimento> tableViewAtendimento;
-	
+
 	@FXML
 	private TableColumn<Atendimento, Integer> tableColumnId;
-	
+
 	@FXML
 	private TableColumn<Atendimento, Double> tableColumnPreço;
 
 	@FXML
 	private TableColumn<Atendimento, Paciente> tableColumnPaciente;
-	
+
 	@FXML
 	private TableColumn<Atendimento, Serviço> tableColumnServiço;
-	
+
 	@FXML
 	private TableColumn<Atendimento, Date> tableColumnData;
-	
-	@FXML 
+
+	@FXML
+	private TableColumn<Atendimento, Atendimento> tableColumnEDIT;
+
+	@FXML
 	private Button btNovo;
-	
+
 	private ObservableList<Atendimento> obsList;
-	
+
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
 		Atendimento obj = new Atendimento(new Paciente(""), new ServiçoUnico("", null), new Date());
 		createDialogForm(obj, "/gui/AtendimentoForm.fxml", parentStage);
 	}
-	
+
 	public void setAtendimentoService(AtendimentoService service) {
 		this.service = service;
 	}
-	
+
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeNodes();
@@ -80,28 +85,29 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 		tableColumnPaciente.setCellValueFactory(new PropertyValueFactory<>("paciente"));
 		tableColumnServiço.setCellValueFactory(new PropertyValueFactory<>("serviço"));
 		tableColumnData.setCellValueFactory(new PropertyValueFactory<>("dataAtendimento"));
-		
+
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewAtendimento.prefHeightProperty().bind(stage.heightProperty());
 	}
-	
+
 	public void updateTableView() {
 		List<Atendimento> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewAtendimento.setItems(obsList);
+		initEditButtons();
 	}
-	
+
 	private void createDialogForm(Atendimento obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
-			
+
 			AtendimentoFormController controller = loader.getController();
 			controller.setAtendimento(obj);
 			controller.setAtendimentoService(new AtendimentoService());
 			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
-			
+
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Digite os dados do atendimento");
 			dialogStage.setScene(new Scene(pane));
@@ -118,5 +124,25 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	public void onDataChange() {
 		updateTableView();
 	}
-	
+
+	private void initEditButtons() {
+		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEDIT.setCellFactory(param -> new TableCell<Atendimento, Atendimento>() {
+			private final Button button = new Button("Editar");
+
+			@Override
+			protected void updateItem(Atendimento obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				
+				setGraphic(button);
+				button.setOnAction(
+						event -> createDialogForm(obj, "/gui/AtendimentoForm.fxml", Utils.currentStage(event)));
+			}
+		});
+	}
+
 }

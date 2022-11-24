@@ -28,7 +28,7 @@ public class AtendimentoFormController implements Initializable {
 	private AtendimentoService service;
 
 	private Atendimento entity;
-
+	
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
 	@FXML

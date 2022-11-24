@@ -26,11 +26,12 @@
       </ToolBar>
       <TableView fx:id="tableViewAtendimento" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="48.0" text="ID" visible="false" />
+          <TableColumn fx:id="tableColumnId" prefWidth="48.0" text="ID" />
             <TableColumn fx:id="tableColumnPaciente" prefWidth="162.0" text="Nome do paciente" />
             <TableColumn fx:id="tableColumnServiço" prefWidth="150.0" text="Serviço prestado" />
             <TableColumn fx:id="tableColumnData" prefWidth="139.0" text="Data do atendimento" />
             <TableColumn fx:id="tableColumnPreço" prefWidth="97.0" text="Valor cobrado" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="75.0" />
         </columns>
       </TableView>
    </children>

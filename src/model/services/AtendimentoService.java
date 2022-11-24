@@ -18,9 +18,12 @@ public class AtendimentoService {
 	
 	public void saveOrUpdate(Atendimento atendimento) {
 		if(atendimento.getId() == null) {
+			int id = findAll().size();
+			atendimento.setId(id);
 			service.createAtendimento(atendimento);
 		} else {
-			service.updateAtendimento(atendimento);
+			findAll().remove(atendimento.getId());
+			service.createAtendimento(atendimento);
 		}
 	}
 	

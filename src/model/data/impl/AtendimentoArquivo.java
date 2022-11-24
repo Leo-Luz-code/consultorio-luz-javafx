@@ -71,14 +71,14 @@ public class AtendimentoArquivo implements IAtendimento {
 	}
 
 	@Override
-	public void updateAtendimento(Atendimento Atendimento) {
-		ArrayList<Atendimento> Atendimentos;
+	public void updateAtendimento(Atendimento atendimento) {
+		ArrayList<Atendimento> atendimentos;
 		boolean achou = false;
-		Atendimentos = (ArrayList<Atendimento>) getAllAtendimentos();
-		for (int i = 0; i < Atendimentos.size(); i++) {
-			if (Atendimento.getId() == Atendimentos.get(i).getId()) {
-				Atendimentos.remove(i);
-				Atendimentos.add(Atendimento);
+		atendimentos = (ArrayList<Atendimento>) getAllAtendimentos();
+		for (int i = 0; i < atendimentos.size(); i++) {
+			if (atendimento.getId() == atendimentos.get(i).getId()) {
+				atendimentos.remove(i);
+				atendimentos.add(atendimento);
 				achou = true;
 				break;
 			}
@@ -88,8 +88,8 @@ public class AtendimentoArquivo implements IAtendimento {
 			try {
 				fluxo = new FileOutputStream(arquivo);
 				ObjectOutputStream gravarObj = new ObjectOutputStream(fluxo);
-				for (int i = 0; i < Atendimentos.size(); i++) {
-					gravarObj.writeObject(Atendimentos.get(i));
+				for (int i = 0; i < atendimentos.size(); i++) {
+					gravarObj.writeObject(atendimentos.get(i));
 				}
 				gravarObj.close();
 			} catch (FileNotFoundException e) {
@@ -127,6 +127,16 @@ public class AtendimentoArquivo implements IAtendimento {
 				Alerts.showAlert("Erro ao remover o Atendimento", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
+	}
+
+	@Override
+	public boolean checkAtendimento(Atendimento atendimento) {
+		for (int i = 0; i < getAllAtendimentos().size(); i++) {
+			if (getAllAtendimentos().get(i).getPaciente().getNome()== atendimento.getPaciente().getNome()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
