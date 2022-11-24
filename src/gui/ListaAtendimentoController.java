@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.listener.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -30,7 +31,7 @@ import model.entities.Serviço;
 import model.entities.ServiçoUnico;
 import model.services.AtendimentoService;
 
-public class ListaAtendimentoController implements Initializable{
+public class ListaAtendimentoController implements Initializable, DataChangeListener{
 
 	private AtendimentoService service;
 	
@@ -94,7 +95,8 @@ public class ListaAtendimentoController implements Initializable{
 			AtendimentoFormController controller = loader.getController();
 			controller.setAtendimento(obj);
 			controller.setAtendimentoService(new AtendimentoService());
-			controller.updateFormData(); 
+			controller.subscribeDataChangeListener(this);
+			controller.updateFormData();
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Digite os dados do atendimento");
@@ -106,6 +108,11 @@ public class ListaAtendimentoController implements Initializable{
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Erro carregando página", e.getMessage(), AlertType.ERROR);
 		}
+	}
+
+	@Override
+	public void onDataChange() {
+		updateTableView();
 	}
 	
 }
