@@ -3,7 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import gui.listener.DataChangeListener;
 import gui.util.Constraints;
@@ -18,6 +20,7 @@ import model.entities.Atendimento;
 import model.entities.Paciente;
 import model.entities.Serviço;
 import model.entities.ServiçoUnico;
+import model.exceptions.ValidationException;
 import model.services.AtendimentoService;
 
 public class AtendimentoFormController implements Initializable {
@@ -33,6 +36,9 @@ public class AtendimentoFormController implements Initializable {
 
 	@FXML
 	private TextField txtNome;
+	
+	@FXML
+	private TextField txtPreço;
 
 	@FXML
 	private TextField txtServiço;
@@ -63,10 +69,14 @@ public class AtendimentoFormController implements Initializable {
 		if (service == null) {
 			throw new IllegalStateException("AtendimentoService nulo");
 		}
-		entity = getFormData();
-		service.saveOrUpdate(entity);
-		notifyDataChangeListeners();
-		Utils.currentStage(event).close();
+		try {
+			entity = getFormData();
+			service.saveOrUpdate(entity);
+			notifyDataChangeListeners();
+			Utils.currentStage(event).close();
+		} catch(ValidationException e) {
+			setErrorMessages(e.getErrors());
+		}
 	}
 	
 	private void notifyDataChangeListeners() {
@@ -82,11 +92,26 @@ public class AtendimentoFormController implements Initializable {
 
 	private Atendimento getFormData() {
 		Atendimento atd = new Atendimento();
-		atd.setId(Utils.tryParseToInt(txtId.getText()));
-		Paciente pct = new Paciente(txtNome.getText());
 		Serviço svc = new ServiçoUnico(txtServiço.getText());
+		
+		ValidationException exception = new ValidationException("Erro de validação");
+		
+		atd.setId(Utils.tryParseToInt(txtId.getText()));
+		
+		if(txtNome.getText() == null || txtNome.getText().trim().equals("")) {
+			exception.addError("nome", "O campo não pode ser vazio");
+		}
+		
+		Paciente pct = new Paciente(txtNome.getText());
+		svc.setPreco(Utils.tryParseToDouble(txtPreço.getText()));
+		atd.setValorCobrado(Utils.tryParseToDouble(txtPreço.getText()));
 		atd.setPaciente(pct);
 		atd.setServiço(svc);
+		
+		if(exception.getErrors().size() > 0) {
+			throw exception;
+		}
+		
 		return atd;
 	}
 
@@ -105,6 +130,7 @@ public class AtendimentoFormController implements Initializable {
 	public void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtNome, 30);
+		Constraints.setTextFieldDouble(txtPreço);
 	}
 
 	@Override
@@ -117,9 +143,25 @@ public class AtendimentoFormController implements Initializable {
 		if (entity == null) {
 			throw new IllegalStateException("Atendimento nulo");
 		}
-
 		txtId.setText(String.valueOf(entity.getId()));
 		txtNome.setText(entity.getPaciente().getNome());
+		txtServiço.setText(entity.getServiço().getNome());
+		txtPreço.setText(String.valueOf(entity.getServiço().getPreco()));
+	}
+	
+	private void setErrorMessages(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+		
+		if(fields.contains("nome")) {
+			labelErrorNome.setText(errors.get("nome"));
+		}
+		if(fields.contains("nome")) {
+			labelErrorServiço.setText(errors.get("nome"));
+		}
+		if(fields.contains("nome")) {
+			labelErrorData.setText(errors.get("nome"));
+		}
+		
 	}
 
 }

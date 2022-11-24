@@ -13,6 +13,7 @@ public class Atendimento implements Serializable {
 	
 	private Integer id;
 	private Paciente paciente;
+	private Double valorCobrado;
 	private Serviço serviço;
 	private Date dataAtendimento;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -31,6 +32,7 @@ public class Atendimento implements Serializable {
 		this.paciente = paciente;
 		this.serviço = serviçoUnico;
 		this.dataAtendimento = date;
+		setValorCobrado(serviçoUnico.getPreco());
 	}
 
 	public Integer getId() {
@@ -63,6 +65,14 @@ public class Atendimento implements Serializable {
 
 	public void setDataAtendimento(Date dataAtendimento) {
 		this.dataAtendimento = dataAtendimento;
+	}
+
+	public Double getValorCobrado() {
+		return valorCobrado;
+	}
+
+	public void setValorCobrado(Double valorCobrado) {
+		this.valorCobrado = valorCobrado;
 	}
 	
 }

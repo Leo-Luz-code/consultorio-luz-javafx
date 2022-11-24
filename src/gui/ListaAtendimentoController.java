@@ -40,6 +40,9 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	
 	@FXML
 	private TableColumn<Atendimento, Integer> tableColumnId;
+	
+	@FXML
+	private TableColumn<Atendimento, Double> tableColumnPreço;
 
 	@FXML
 	private TableColumn<Atendimento, Paciente> tableColumnPaciente;
@@ -58,7 +61,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		Atendimento obj = new Atendimento(new Paciente(""), new ServiçoUnico(""), new Date());
+		Atendimento obj = new Atendimento(new Paciente(""), new ServiçoUnico("", null), new Date());
 		createDialogForm(obj, "/gui/AtendimentoForm.fxml", parentStage);
 	}
 	
@@ -73,6 +76,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 
 	private void initializeNodes() {
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+		tableColumnPreço.setCellValueFactory(new PropertyValueFactory<>("valorCobrado"));
 		tableColumnPaciente.setCellValueFactory(new PropertyValueFactory<>("paciente"));
 		tableColumnServiço.setCellValueFactory(new PropertyValueFactory<>("serviço"));
 		tableColumnData.setCellValueFactory(new PropertyValueFactory<>("dataAtendimento"));

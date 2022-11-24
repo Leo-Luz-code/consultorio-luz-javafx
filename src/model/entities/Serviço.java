@@ -27,6 +27,11 @@ public abstract class Serviço implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Serviço(String nome2, Double preço) {
+		this.nome=nome2;
+		this.preco = preço;
+	}
+
 	public Date getDataAtendimento() {
 		return dataAtendimento;
 	}

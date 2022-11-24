@@ -21,6 +21,10 @@ public class ServiçoUnico extends Serviço {
 		super(nome);
 	}
 
+	public ServiçoUnico(String nome, Double preço) {
+		super(nome, preço);
+	}
+
 	public Date getDataServiço() {
 		return dataServiço;
 	}
