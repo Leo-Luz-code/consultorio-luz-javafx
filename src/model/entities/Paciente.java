@@ -1,20 +1,32 @@
 package model.entities;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Paciente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Long cpf;
+	private Integer id;
+	private String cpf;
 	private String nome;
 	private Long telefone;
-	private String data;
+	private Date dataCadastro;
+	private ArrayList<Serviço> serviços;
 	
+	public Paciente(Integer id, String cpf, String nome, Long telefone, Date dataCadastro) {
+		this.id = id;
+		this.cpf = cpf;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.dataCadastro = dataCadastro;
+	}
+
 	public Paciente(String nome) {
 		this.nome=nome;
 	}
 
-	public Paciente(Long cpf, String nome, Long telefone) {
+	public Paciente(String cpf, String nome, Long telefone) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.telefone = telefone;
@@ -24,11 +36,11 @@ public class Paciente implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
@@ -70,11 +82,27 @@ public class Paciente implements Serializable {
 		return nome;
 	}
 
-	public String getData() {
-		return data;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setData(String data) {
-		this.data = data;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public ArrayList<Serviço> getServiços() {
+		return serviços;
+	}
+
+	public void setServiços(ArrayList<Serviço> serviços) {
+		this.serviços = serviços;
 	}
 }

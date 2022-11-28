@@ -18,6 +18,14 @@ public class Utils {
 		}
 	}
 	
+	public static Long tryParseToLong(String str) {
+		try {
+			return Long.parseLong(str);
+		} catch(NumberFormatException e) {
+			return null;
+		}
+	}
+	
 	public static Double tryParseToDouble(String str) {
 		try {
 			return Double.parseDouble(str);

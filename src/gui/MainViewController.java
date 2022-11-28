@@ -73,6 +73,10 @@ public class MainViewController implements Initializable{
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 			
+			ListaPacienteController controller = loader.getController();
+			controller.setPacienteService(new PacienteService());
+			controller.updateTableView();
+			
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Erro carregando a página", e.getMessage(), AlertType.ERROR);
 		}
