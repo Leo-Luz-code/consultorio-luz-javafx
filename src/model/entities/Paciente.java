@@ -1,6 +1,5 @@
 package model.entities;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Paciente implements Serializable {
@@ -12,7 +11,8 @@ public class Paciente implements Serializable {
 	private String nome;
 	private Long telefone;
 	private Date dataCadastro;
-	private ArrayList<Serviço> serviços;
+	private Serviço serviço;
+	private Double cobrança;
 	
 	public Paciente(Integer id, String cpf, String nome, Long telefone, Date dataCadastro) {
 		this.id = id;
@@ -98,11 +98,19 @@ public class Paciente implements Serializable {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public ArrayList<Serviço> getServiços() {
-		return serviços;
+	public Serviço getServiço() {
+		return serviço;
 	}
 
-	public void setServiços(ArrayList<Serviço> serviços) {
-		this.serviços = serviços;
+	public void setServiço(Serviço serviço) {
+		this.serviço = serviço;
+	}
+
+	public Double getCobrança() {
+		return cobrança;
+	}
+
+	public void setCobrança(Double cobrança) {
+		this.cobrança = cobrança;
 	}
 }

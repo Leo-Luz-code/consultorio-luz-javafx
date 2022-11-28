@@ -36,24 +36,30 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 
 	@FXML
 	private TableColumn<Paciente, Integer> tableColumnId;
-
-	@FXML
-	private TableColumn<Paciente, Double> tableColumnPreço;
-
-	@FXML
-	private TableColumn<Paciente, Paciente> tableColumnREMOVE;
-
-	@FXML
-	private TableColumn<Paciente, Paciente> tableColumnPaciente;
-
+	
 	@FXML
 	private TableColumn<Paciente, Serviço> tableColumnServiço;
+	
+	@FXML
+	private TableColumn<Paciente, Double> tableColumnCobrança;
 
 	@FXML
-	private TableColumn<Paciente, String> tableColumnData;
+	private TableColumn<Paciente, String> tableColumnNome;
+
+	@FXML
+	private TableColumn<Paciente, String> tableColumnCpf;
+
+	@FXML
+	private TableColumn<Paciente, Long> tableColumnTelefone;
+
+	@FXML
+	private TableColumn<Paciente, Date> tableColumnDataCadastro;
 
 	@FXML
 	private TableColumn<Paciente, Paciente> tableColumnEDIT;
+	
+	@FXML
+	private TableColumn<Paciente, Paciente> tableColumnREMOVE;
 
 	@FXML
 	private Button btNovo;
@@ -78,12 +84,15 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 	}
 
 	private void initializeNodes() {
+		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("cobrança"));
+		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("serviço"));
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		tableColumnPreço.setCellValueFactory(new PropertyValueFactory<>("valorCobrado"));
-		tableColumnPaciente.setCellValueFactory(new PropertyValueFactory<>("paciente"));
-		tableColumnServiço.setCellValueFactory(new PropertyValueFactory<>("serviço"));
-		tableColumnData.setCellValueFactory(new PropertyValueFactory<>("dataPaciente"));
-
+		tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		tableColumnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+		tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+		tableColumnDataCadastro.setCellValueFactory(new PropertyValueFactory<>("dataCadastro"));
+		Utils.formatTableColumnDouble(tableColumnCobrança, 2);
+		Utils.formatTableColumnDate(tableColumnDataCadastro, "dd/MM/yyyy");
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewPaciente.prefHeightProperty().bind(stage.heightProperty());
 //		initEditButtons();
