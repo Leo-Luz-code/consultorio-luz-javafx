@@ -1,6 +1,5 @@
 package model.services;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import model.data.IAtendimento;
@@ -10,7 +9,6 @@ import model.entities.Atendimento;
 public class AtendimentoService {
 	
 	private IAtendimento service = new AtendimentoArquivo();
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public List<Atendimento> findAll() {
 		return service.getAllAtendimentos();
@@ -20,17 +18,12 @@ public class AtendimentoService {
 		service.deleteAtendimento(atendimento);
 	}
 	
-	
 	public void saveOrUpdate(Atendimento atendimento) {
 		if(atendimento.getId() == null) {
-			int id = findAll().size();
-			atendimento.setId(id);
+			atendimento.setId(findAll().size());
 			service.createAtendimento(atendimento);
 		} else {
-			int id = findAll().size();
-			atendimento.setId(id);
-			remove(atendimento);
-			service.createAtendimento(atendimento);
+			service.updateAtendimento(atendimento);
 		}
 	}
 	

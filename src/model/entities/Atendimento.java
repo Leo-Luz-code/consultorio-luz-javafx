@@ -12,27 +12,26 @@ public class Atendimento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private Paciente paciente;
+	private String nomePaciente;
 	private Double valorCobrado;
-	private Serviço serviço;
+	private String nomeServiço;
 	private String dataAtendimento;
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
-	public Atendimento(Integer id, Paciente paciente, Serviço serviço, String dataAtendimento) {
+	public Atendimento(Integer id, String paciente, Double valorCobrado, String serviço, String dataAtendimento) {
 		this.id = id;
-		this.paciente = paciente;
-		this.serviço = serviço;
+		this.nomePaciente = paciente;
+		this.valorCobrado=valorCobrado;
+		this.nomeServiço = serviço;
 		this.dataAtendimento = dataAtendimento;
 	}
 
 	public Atendimento() {
 	}
 
-	public Atendimento(Paciente paciente, ServiçoUnico serviçoUnico, String date) {
-		this.paciente = paciente;
-		this.serviço = serviçoUnico;
+	public Atendimento(String paciente, String serviçoUnico, String date) {
+		this.nomePaciente = paciente;
+		this.nomeServiço = serviçoUnico;
 		this.dataAtendimento = date;
-		setValorCobrado(serviçoUnico.getPreco());
 	}
 
 	public Integer getId() {
@@ -43,20 +42,20 @@ public class Atendimento implements Serializable {
 		this.id = id;
 	}
 
-	public Paciente getPaciente() {
-		return paciente;
+	public String getPaciente() {
+		return nomePaciente;
 	}
 
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
+	public void setPaciente(String paciente) {
+		this.nomePaciente = paciente;
 	}
 
-	public Serviço getServiço() {
-		return serviço;
+	public String getServiço() {
+		return nomeServiço;
 	}
 
-	public void setServiço(Serviço serviço) {
-		this.serviço = serviço;
+	public void setServiço(String serviço) {
+		this.nomeServiço = serviço;
 	}
 
 	public String getDataAtendimento() {

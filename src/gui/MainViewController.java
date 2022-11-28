@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.data.impl.AtendimentoArquivo;
 import model.services.AtendimentoService;
 import model.services.PacienteService;
 import model.services.ServiçoService;

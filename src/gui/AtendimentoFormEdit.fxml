@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="257.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AtendimentoFormController">
+<AnchorPane prefHeight="257.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AtendimentoFormEditController">
    <children>
       <GridPane layoutX="8.0" layoutY="21.0" prefHeight="148.0" prefWidth="426.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
@@ -38,7 +38,7 @@
             <Label fx:id="labelErrorPreço" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label fx:id="labelErrorData" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Label prefHeight="11.0" prefWidth="99.0" text="ID" />
-            <TextField fx:id="txtId" editable="false" GridPane.columnIndex="1" />
+            <TextField fx:id="txtId" GridPane.columnIndex="1" />
             <Label prefHeight="17.0" prefWidth="104.0" text="Valor do serviço:" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets />
@@ -50,7 +50,7 @@
       <HBox layoutX="113.0" layoutY="202.0" prefHeight="41.0" prefWidth="178.0" spacing="5.0">
          <children>
             <Button fx:id="btSalvar" mnemonicParsing="false" onAction="#onBtSalvarAction" text="Salvar" />
-            <Button fx:id="btDeletar" mnemonicParsing="false" onAction="#onBtDeletarAction" text="Deletar" visible="false" />
+            <Button fx:id="btSalvar1" mnemonicParsing="false" onAction="#onBtSalvarAction" text="Deletar" />
             <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="Cancelar" textAlignment="RIGHT">
                <HBox.margin>
                   <Insets />

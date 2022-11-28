@@ -71,7 +71,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		Atendimento obj = new Atendimento(new Paciente(""), new ServiçoUnico("", null), "");
+		Atendimento obj = new Atendimento(null, "", 0.0, "", "");
 		createDialogForm(obj, "/gui/AtendimentoForm.fxml", parentStage);
 
 	}
@@ -94,6 +94,8 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewAtendimento.prefHeightProperty().bind(stage.heightProperty());
+		initEditButtons();
+		initRemoveButtons();
 	}
 
 	public void updateTableView() {

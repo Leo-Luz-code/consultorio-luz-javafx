@@ -23,7 +23,7 @@ import model.entities.ServiçoUnico;
 import model.exceptions.ValidationException;
 import model.services.AtendimentoService;
 
-public class AtendimentoFormController implements Initializable {
+public class AtendimentoFormEditController implements Initializable {
 
 	private AtendimentoService service;
 
@@ -63,9 +63,6 @@ public class AtendimentoFormController implements Initializable {
 
 	@FXML
 	private Button btSalvar;
-	
-	@FXML
-	private Button btDeletar;
 
 	@FXML
 	private Button btCancelar;
@@ -87,7 +84,7 @@ public class AtendimentoFormController implements Initializable {
 			setErrorMessages(e.getErrors());
 		}
 	}
-
+	
 	@FXML
 	public void onBtDeletarAction(ActionEvent event) {
 		if (entity == null) {
@@ -105,7 +102,7 @@ public class AtendimentoFormController implements Initializable {
 			setErrorMessages(e.getErrors());
 		}
 	}
-	
+
 	private void notifyDataChangeListeners() {
 		for (DataChangeListener listener : dataChangeListeners) {
 			listener.onDataChange();
@@ -197,16 +194,16 @@ public class AtendimentoFormController implements Initializable {
 			labelErrorNome.setText(errors.get("nome"));
 		}
 		if (fields.contains("serviço")) {
-			labelErrorServiço.setText(errors.get("serviço"));
+			labelErrorServiço.setText(errors.get("nome"));
 		}
 		if (fields.contains("data")) {
-			labelErrorData.setText(errors.get("data"));
+			labelErrorData.setText(errors.get("nome"));
 		}
 		if (fields.contains("id")) {
-			labelErrorId.setText(errors.get("id"));
+			labelErrorId.setText(errors.get("nome"));
 		}
 		if (fields.contains("preço")) {
-			labelErrorPreço.setText(errors.get("preço"));
+			labelErrorPreço.setText(errors.get("nome"));
 
 		}
 	}

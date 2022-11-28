@@ -18,6 +18,9 @@
          <padding>
             <Insets left="5.0" top="5.0" />
          </padding>
+         <VBox.margin>
+            <Insets left="300.0" />
+         </VBox.margin>
       </Label>
       <ToolBar prefHeight="0.0" prefWidth="543.0" snapToPixel="false">
         <items>
@@ -31,6 +34,8 @@
             <TableColumn fx:id="tableColumnServiço" prefWidth="150.0" text="Serviço prestado" />
             <TableColumn fx:id="tableColumnData" prefWidth="139.0" text="Data do atendimento" />
             <TableColumn fx:id="tableColumnPreço" prefWidth="97.0" text="Valor cobrado" />
+            <TableColumn fx:id="tableColumnEDIT" prefWidth="48.0" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="63.0" />
         </columns>
       </TableView>
    </children>
