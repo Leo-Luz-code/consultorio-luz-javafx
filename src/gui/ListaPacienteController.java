@@ -56,7 +56,7 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 	private TableColumn<Paciente, String> tableColumnCpf;
 
 	@FXML
-	private TableColumn<Paciente, Long> tableColumnTelefone;
+	private TableColumn<Paciente, String> tableColumnTelefone;
 
 	@FXML
 	private TableColumn<Paciente, Date> tableColumnDataCadastro;
@@ -75,7 +75,7 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		Paciente obj = new Paciente(null, "", "", Long.parseLong("0"), new Date(), new Serviço("", null), null);
+		Paciente obj = new Paciente(null, "", "", "", new Date(), new Serviço("", null), 0.00);
 		createDialogForm(obj, "/gui/PacienteForm.fxml", parentStage);
 	}
 
@@ -89,8 +89,8 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 	}
 
 	private void initializeNodes() {
-		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("cobrança"));
-		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("serviço"));
+		tableColumnCobrança.setCellValueFactory(new PropertyValueFactory<>("cobrança"));
+		tableColumnServiço.setCellValueFactory(new PropertyValueFactory<>("serviço"));
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		tableColumnCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));

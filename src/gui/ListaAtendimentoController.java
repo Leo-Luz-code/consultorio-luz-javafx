@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -44,7 +45,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	private TableColumn<Atendimento, Integer> tableColumnId;
 
 	@FXML
-	private TableColumn<Atendimento, Double> tableColumnPreço;
+	private TableColumn<Atendimento, Double> tableColumnValorCobrado;
 
 	@FXML
 	private TableColumn<Atendimento, Atendimento> tableColumnREMOVE;
@@ -56,7 +57,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	private TableColumn<Atendimento, Serviço> tableColumnServiço;
 
 	@FXML
-	private TableColumn<Atendimento, String> tableColumnData;
+	private TableColumn<Atendimento, Date> tableColumnData;
 
 	@FXML
 	private TableColumn<Atendimento, Atendimento> tableColumnEDIT;
@@ -69,7 +70,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		Atendimento obj = new Atendimento(null, "", 0.0, "", "");
+		Atendimento obj = new Atendimento(null, "", 0.0, new Serviço("", null), new Date());
 		createDialogForm(obj, "/gui/AtendimentoForm.fxml", parentStage);
 
 	}
@@ -85,11 +86,12 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 
 	private void initializeNodes() {
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		tableColumnPreço.setCellValueFactory(new PropertyValueFactory<>("valorCobrado"));
+		tableColumnValorCobrado.setCellValueFactory(new PropertyValueFactory<>("valorCobrado"));
 		tableColumnPaciente.setCellValueFactory(new PropertyValueFactory<>("paciente"));
 		tableColumnServiço.setCellValueFactory(new PropertyValueFactory<>("serviço"));
 		tableColumnData.setCellValueFactory(new PropertyValueFactory<>("dataAtendimento"));
-
+		Utils.formatTableColumnDate(tableColumnData, "dd/MM/yyyy");
+		Utils.formatTableColumnDouble(tableColumnValorCobrado, 2);
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewAtendimento.prefHeightProperty().bind(stage.heightProperty());
 		initEditButtons();
@@ -122,6 +124,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 			dialogStage.showAndWait();
 		} catch (IOException e) {
 			Alerts.showAlert("IO Exception", "Erro carregando página", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 

@@ -1,7 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -14,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Atendimento;
@@ -35,13 +40,13 @@ public class AtendimentoFormController implements Initializable {
 	private TextField txtNome;
 
 	@FXML
-	private TextField txtPreço;
+	private TextField txtValorCobrado;
 
 	@FXML
 	private TextField txtServiço;
 
 	@FXML
-	private TextField txtData;
+	private DatePicker dpDataAtendimento;
 
 	@FXML
 	private Label labelErrorNome;
@@ -56,14 +61,11 @@ public class AtendimentoFormController implements Initializable {
 	private Label labelErrorId;
 
 	@FXML
-	private Label labelErrorPreço;
+	private Label labelErrorValorCobrado;
 
 	@FXML
 	private Button btSalvar;
 	
-	@FXML
-	private Button btDeletar;
-
 	@FXML
 	private Button btCancelar;
 
@@ -78,24 +80,6 @@ public class AtendimentoFormController implements Initializable {
 		try {
 			entity = getFormData();
 			service.saveOrUpdate(entity);
-			notifyDataChangeListeners();
-			Utils.currentStage(event).close();
-		} catch (ValidationException e) {
-			setErrorMessages(e.getErrors());
-		}
-	}
-
-	@FXML
-	public void onBtDeletarAction(ActionEvent event) {
-		if (entity == null) {
-			throw new IllegalStateException("Atendimento nulo");
-		}
-		if (service == null) {
-			throw new IllegalStateException("AtendimentoService nulo");
-		}
-		try {
-			entity = getFormData();
-			service.remove(entity);
 			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
 		} catch (ValidationException e) {
@@ -129,19 +113,22 @@ public class AtendimentoFormController implements Initializable {
 			exception.addError("nome", "O campo não pode ser vazio");
 		}
 		
-		atd.setValorCobrado(Utils.tryParseToDouble(txtPreço.getText()));
-		if (txtPreço.getText() == null || txtPreço.getText().trim().equals("")) {
-			exception.addError("preço", "O campo não pode ser vazio");
+		atd.setValorCobrado(Utils.tryParseToDouble(txtValorCobrado.getText()));
+		if (txtValorCobrado.getText() == null || txtValorCobrado.getText().trim().equals("")) {
+			exception.addError("valorCobrado", "O campo não pode ser vazio");
 		}
 		
-		atd.setServiço(txtServiço.getText());
-		if (txtServiço.getText() == null || txtServiço.getText().trim().equals("")) {
-			exception.addError("serviço", "O campo não pode ser vazio");
-		}
+//		atd.getServiço().setNome((txtServiço.getText()));;
+//		if (txtServiço.getText() == null || txtServiço.getText().trim().equals("")) {
+//			exception.addError("serviço", "O campo não pode ser vazio");
+//		}
 		
-		atd.setDataAtendimento(txtData.getText());
-		if (txtData.getText() == null || txtData.getText().trim().equals("")) {
-			exception.addError("data", "O campo não pode ser vazio");
+		if (dpDataAtendimento.getValue() == null) {
+			exception.addError("dataCadastro", "O campo não pode ser vazio");
+		}
+		else {
+			Instant instant = Instant.from(dpDataAtendimento.getValue().atStartOfDay(ZoneId.systemDefault()));
+			atd.setDataAtendimento((Date.from(instant)));
 		}
 		
 		if (exception.getErrors().size() > 0) {
@@ -166,7 +153,7 @@ public class AtendimentoFormController implements Initializable {
 	public void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtNome, 30);
-		Constraints.setTextFieldDouble(txtPreço);
+		Constraints.setTextFieldDouble(txtValorCobrado);
 	}
 
 	@Override
@@ -182,9 +169,11 @@ public class AtendimentoFormController implements Initializable {
 		
 		txtId.setText(String.valueOf(entity.getId()));
 		txtNome.setText(entity.getPaciente());
-		txtServiço.setText(entity.getServiço());
-		txtData.setText(entity.getDataAtendimento());
-		txtPreço.setText(String.valueOf(entity.getValorCobrado()));
+//		txtServiço.setText(entity.getServiço().getNome());
+		if (entity.getDataAtendimento() != null) {
+			dpDataAtendimento.setValue(LocalDate.ofInstant(entity.getDataAtendimento().toInstant(), ZoneId.systemDefault()));
+		}
+		txtValorCobrado.setText(String.format("%.2f", entity.getValorCobrado()));
 	}
 
 	private void setErrorMessages(Map<String, String> errors) {
@@ -196,14 +185,14 @@ public class AtendimentoFormController implements Initializable {
 		if (fields.contains("serviço")) {
 			labelErrorServiço.setText(errors.get("serviço"));
 		}
-		if (fields.contains("data")) {
-			labelErrorData.setText(errors.get("data"));
+		if (fields.contains("dataCadastro")) {
+			labelErrorData.setText(errors.get("dataCadastro"));
 		}
 		if (fields.contains("id")) {
 			labelErrorId.setText(errors.get("id"));
 		}
-		if (fields.contains("preço")) {
-			labelErrorPreço.setText(errors.get("preço"));
+		if (fields.contains("valorCobrado")) {
+			labelErrorValorCobrado.setText(errors.get("valorCobrado"));
 
 		}
 	}

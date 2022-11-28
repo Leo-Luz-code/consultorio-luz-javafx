@@ -9,12 +9,12 @@ public class Paciente implements Serializable {
 	private Integer id;
 	private String cpf;
 	private String nome;
-	private Long telefone;
+	private String telefone;
 	private Date dataCadastro;
 	private Serviço serviço;
 	private Double cobrança;
 	
-	public Paciente(Integer id, String cpf, String nome, Long telefone, Date dataCadastro, Serviço serviço,
+	public Paciente(Integer id, String cpf, String nome, String telefone, Date dataCadastro, Serviço serviço,
 			Double cobrança) {
 		super();
 		this.id = id;
@@ -26,7 +26,7 @@ public class Paciente implements Serializable {
 		this.cobrança = cobrança;
 	}
 
-	public Paciente(Integer id, String cpf, String nome, Long telefone, Date dataCadastro) {
+	public Paciente(Integer id, String cpf, String nome, String telefone, Date dataCadastro) {
 		this.id = id;
 		this.cpf = cpf;
 		this.nome = nome;
@@ -38,7 +38,7 @@ public class Paciente implements Serializable {
 		this.nome=nome;
 	}
 
-	public Paciente(String cpf, String nome, Long telefone) {
+	public Paciente(String cpf, String nome, String telefone) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.telefone = telefone;
@@ -64,11 +64,11 @@ public class Paciente implements Serializable {
 		this.nome = nome;
 	}
 
-	public Long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(Long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 

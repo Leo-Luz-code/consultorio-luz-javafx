@@ -1,7 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -14,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Paciente;
@@ -41,7 +46,7 @@ public class PacienteFormController implements Initializable {
 	private TextField txtCpf;
 
 	@FXML
-	private TextField txtDataCadastro;
+	private DatePicker dpDataCadastro;
 
 	@FXML
 	private TextField txtServiço;
@@ -85,9 +90,9 @@ public class PacienteFormController implements Initializable {
 			throw new IllegalStateException("PacienteService nulo");
 		}
 		try {
-			entity = getFormDataCadastro();
+			entity = getFormData();
 			service.saveOrUpdate(entity);
-			notifyDataCadastroChangeListeners();
+			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
 		} catch (ValidationException e) {
 			setErrorMessages(e.getErrors());
@@ -103,16 +108,16 @@ public class PacienteFormController implements Initializable {
 			throw new IllegalStateException("PacienteService nulo");
 		}
 		try {
-			entity = getFormDataCadastro();
+			entity = getFormData();
 			service.remove(entity);
-			notifyDataCadastroChangeListeners();
+			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
 		} catch (ValidationException e) {
 			setErrorMessages(e.getErrors());
 		}
 	}
 
-	private void notifyDataCadastroChangeListeners() {
+	private void notifyDataChangeListeners() {
 		for (DataChangeListener listener : dataChangeListeners) {
 			listener.onDataChange();
 		}
@@ -123,7 +128,7 @@ public class PacienteFormController implements Initializable {
 		Utils.currentStage(event).close();
 	}
 
-	private Paciente getFormDataCadastro() {
+	private Paciente getFormData() {
 		Paciente pct = new Paciente();
 		ValidationException exception = new ValidationException("Erro de validação");
 
@@ -138,11 +143,11 @@ public class PacienteFormController implements Initializable {
 		}
 
 		pct.setCobrança(Utils.tryParseToDouble(txtCobrança.getText()));
-		if (txtId.getText() == null || txtNome.getText().trim().equals("")) {
+		if (txtCobrança.getText() == null || txtNome.getText().trim().equals("")) {
 			exception.addError("cobrança", "O campo não pode ser vazio");
 		}
 
-		pct.setTelefone(Utils.tryParseToLong(txtTelefone.getText()));
+		pct.setTelefone(txtTelefone.getText());
 		if (txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
 			exception.addError("telefone", "O campo não pode ser vazio");
 		}
@@ -152,10 +157,13 @@ public class PacienteFormController implements Initializable {
 			exception.addError("cpf", "O campo não pode ser vazio");
 		}
 
-//		pct.setDataCadastro(txtDataCadastro.getText());
-//		if (txtDataCadastro.getText() == null || txtDataCadastro.getText().trim().equals("")) {
-//			exception.addError("dataCadastro", "O campo não pode ser vazio");
-//		}
+		if (dpDataCadastro.getValue() == null) {
+			exception.addError("dataCadastro", "O campo não pode ser vazio");
+		}
+		else {
+			Instant instant = Instant.from(dpDataCadastro.getValue().atStartOfDay(ZoneId.systemDefault()));
+			pct.setDataCadastro((Date.from(instant)));
+		}
 
 		if (exception.getErrors().size() > 0) {
 			throw exception;
@@ -178,8 +186,12 @@ public class PacienteFormController implements Initializable {
 
 	public void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
+		Constraints.setTextFieldInteger(txtTelefone);
 		Constraints.setTextFieldMaxLength(txtNome, 30);
-		Constraints.setTextFieldDouble(txtCpf);
+		Constraints.setTextFieldMaxLength(txtCpf, 11);
+		Constraints.setTextFieldInteger(txtCpf);
+		Constraints.setTextFieldDouble(txtCobrança);
+		Utils.formatDatePicker(dpDataCadastro, "dd/MM/yyyy");
 	}
 
 	@Override
@@ -196,8 +208,12 @@ public class PacienteFormController implements Initializable {
 		txtId.setText(String.valueOf(entity.getId()));
 		txtNome.setText(entity.getNome());
 		txtTelefone.setText(String.valueOf(entity.getTelefone()));
-//		txtDataCadastro.setText(entity.getDataCadastro());
 		txtCpf.setText(entity.getCpf());
+		txtCobrança.setText(String.format("%.2f", entity.getCobrança()));
+		
+		if (entity.getDataCadastro() != null) {
+			dpDataCadastro.setValue(LocalDate.ofInstant(entity.getDataCadastro().toInstant(), ZoneId.systemDefault()));
+		}
 	}
 
 	private void setErrorMessages(Map<String, String> errors) {
@@ -206,7 +222,6 @@ public class PacienteFormController implements Initializable {
 		if (fields.contains("nome")) {
 			labelErrorNome.setText(errors.get("nome"));
 		}
-
 		if (fields.contains("dataCadastro")) {
 			labelErrorDataCadastro.setText(errors.get("dataCadastro"));
 		}

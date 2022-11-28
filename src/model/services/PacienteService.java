@@ -22,7 +22,7 @@ public class PacienteService {
 	
 	
 	public void saveOrUpdate(Paciente Paciente) {
-		if(Paciente.getCpf() == null) {
+		if(Paciente.getId() == null) {
 			Paciente.setId(findAll().size());
 			service.createPaciente(Paciente);
 		} else {
