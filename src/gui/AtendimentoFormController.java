@@ -14,21 +14,35 @@ import java.util.Set;
 import gui.listener.DataChangeListener;
 import gui.util.Constraints;
 import gui.util.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 import model.entities.Atendimento;
+import model.entities.Paciente;
+import model.entities.Serviço;
 import model.exceptions.ValidationException;
 import model.services.AtendimentoService;
+import model.services.PacienteService;
+import model.services.ServiçoService;
 
 public class AtendimentoFormController implements Initializable {
 
 	private AtendimentoService service;
 
+	private ServiçoService serviçoService;
+	
+	private PacienteService pacienteService;
+	
 	private Atendimento entity;
 
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
@@ -49,6 +63,12 @@ public class AtendimentoFormController implements Initializable {
 	private DatePicker dpDataAtendimento;
 
 	@FXML
+	private ComboBox<Serviço> comboBoxServiço;
+	
+	@FXML
+	private ComboBox<Paciente> comboBoxPaciente;
+	
+	@FXML
 	private Label labelErrorNome;
 
 	@FXML
@@ -68,6 +88,9 @@ public class AtendimentoFormController implements Initializable {
 	
 	@FXML
 	private Button btCancelar;
+	
+	private ObservableList<Serviço> obsListServiço;
+	private ObservableList<Paciente> obsListPaciente;
 
 	@FXML
 	public void onBtSalvarAction(ActionEvent event) {
@@ -104,13 +127,8 @@ public class AtendimentoFormController implements Initializable {
 
 		
 		atd.setId(Utils.tryParseToInt(txtId.getText()));
-		if (txtId.getText() == null || txtNome.getText().trim().equals("")) {
+		if (txtId.getText() == null || txtId.getText().trim().equals("")) {
 			exception.addError("id", "O campo não pode ser vazio");
-		}
-		
-		atd.setPaciente(txtNome.getText());
-		if (txtNome.getText() == null || txtNome.getText().trim().equals("")) {
-			exception.addError("nome", "O campo não pode ser vazio");
 		}
 		
 		atd.setValorCobrado(Utils.tryParseToDouble(txtValorCobrado.getText()));
@@ -118,10 +136,6 @@ public class AtendimentoFormController implements Initializable {
 			exception.addError("valorCobrado", "O campo não pode ser vazio");
 		}
 		
-//		atd.getServiço().setNome((txtServiço.getText()));;
-//		if (txtServiço.getText() == null || txtServiço.getText().trim().equals("")) {
-//			exception.addError("serviço", "O campo não pode ser vazio");
-//		}
 		
 		if (dpDataAtendimento.getValue() == null) {
 			exception.addError("dataCadastro", "O campo não pode ser vazio");
@@ -131,6 +145,9 @@ public class AtendimentoFormController implements Initializable {
 			atd.setDataAtendimento((Date.from(instant)));
 		}
 		
+		atd.setServiço(comboBoxServiço.getValue());
+		atd.setPaciente(comboBoxPaciente.getValue());
+		
 		if (exception.getErrors().size() > 0) {
 			throw exception;
 		}
@@ -138,8 +155,10 @@ public class AtendimentoFormController implements Initializable {
 		return atd;
 	}
 
-	public void setAtendimentoService(AtendimentoService service) {
+	public void setServices(AtendimentoService service, ServiçoService serviçoService, PacienteService pacienteService) {
 		this.service = service;
+		this.serviçoService = serviçoService;
+		this.pacienteService = pacienteService;
 	}
 
 	public void setAtendimento(Atendimento entity) {
@@ -154,6 +173,9 @@ public class AtendimentoFormController implements Initializable {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtNome, 30);
 		Constraints.setTextFieldDouble(txtValorCobrado);
+		
+		initializeComboBoxServiço();
+		initializeComboBoxPaciente();
 	}
 
 	@Override
@@ -168,14 +190,43 @@ public class AtendimentoFormController implements Initializable {
 		}
 		
 		txtId.setText(String.valueOf(entity.getId()));
-		txtNome.setText(entity.getPaciente());
-//		txtServiço.setText(entity.getServiço().getNome());
+		
+		if (entity.getPaciente() == null) {
+			comboBoxPaciente.getSelectionModel().selectFirst();
+		} else {
+			comboBoxPaciente.setValue(entity.getPaciente());
+		} 
+		
+		if (entity.getServiço() == null) {
+			comboBoxServiço.getSelectionModel().selectFirst();
+		} else {
+			comboBoxServiço.setValue(entity.getServiço());
+		} 
+		
 		if (entity.getDataAtendimento() != null) {
 			dpDataAtendimento.setValue(LocalDate.ofInstant(entity.getDataAtendimento().toInstant(), ZoneId.systemDefault()));
 		}
 		txtValorCobrado.setText(String.format("%.2f", entity.getValorCobrado()));
 	}
 
+	public void loadAssociatedObjects() {
+		if (serviçoService == null)
+			throw new IllegalStateException("ServiçoService nulo");
+
+		List<Serviço> list = serviçoService.findAll();
+		obsListServiço = FXCollections.observableArrayList(list);
+		comboBoxServiço.setItems(obsListServiço);
+	}
+	
+	public void loadAssociatedObjectsPaciente() {
+		if (serviçoService == null)
+			throw new IllegalStateException("PacienteService nulo");
+
+		List<Paciente> list = pacienteService.findAll();
+		obsListPaciente = FXCollections.observableArrayList(list);
+		comboBoxPaciente.setItems(obsListPaciente);
+	}
+	
 	private void setErrorMessages(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();
 
@@ -196,4 +247,29 @@ public class AtendimentoFormController implements Initializable {
 
 		}
 	}
+	
+	private void initializeComboBoxServiço() {
+		Callback<ListView<Serviço>, ListCell<Serviço>> factory = lv -> new ListCell<Serviço>() {
+			@Override
+			protected void updateItem(Serviço item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getNome());
+			}
+		};
+		comboBoxServiço.setCellFactory(factory);
+		comboBoxServiço.setButtonCell(factory.call(null));
+	}
+	
+	private void initializeComboBoxPaciente() {
+		Callback<ListView<Paciente>, ListCell<Paciente>> factory = lv -> new ListCell<Paciente>() {
+			@Override
+			protected void updateItem(Paciente item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getNome());
+			}
+		};
+		comboBoxPaciente.setCellFactory(factory);
+		comboBoxPaciente.setButtonCell(factory.call(null));
+	}
+	
 }

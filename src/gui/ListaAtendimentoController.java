@@ -33,6 +33,8 @@ import model.entities.Atendimento;
 import model.entities.Paciente;
 import model.entities.Serviço;
 import model.services.AtendimentoService;
+import model.services.PacienteService;
+import model.services.ServiçoService;
 
 public class ListaAtendimentoController implements Initializable, DataChangeListener {
 
@@ -70,7 +72,7 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		Atendimento obj = new Atendimento(null, "", 0.0, new Serviço("", null), new Date());
+		Atendimento obj = new Atendimento(null, null, 0.0, new Serviço("", null), new Date());
 		createDialogForm(obj, "/gui/AtendimentoForm.fxml", parentStage);
 
 	}
@@ -111,7 +113,9 @@ public class ListaAtendimentoController implements Initializable, DataChangeList
 
 			AtendimentoFormController controller = loader.getController();
 			controller.setAtendimento(obj);
-			controller.setAtendimentoService(new AtendimentoService());
+			controller.setServices(new AtendimentoService(), new ServiçoService(), new PacienteService());
+			controller.loadAssociatedObjectsPaciente();
+			controller.loadAssociatedObjects();
 			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 

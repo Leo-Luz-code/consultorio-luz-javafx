@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import model.entities.Paciente;
 import model.entities.Serviço;
 import model.services.PacienteService;
+import model.services.ServiçoService;
 
 public class ListaPacienteController implements Initializable, DataChangeListener {
 
@@ -117,7 +118,8 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 
 			PacienteFormController controller = loader.getController();
 			controller.setPaciente(obj);
-			controller.setPacienteService(new PacienteService());
+			controller.setServices(new PacienteService(), new ServiçoService());
+			controller.loadAssociatedObjects();
 			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 

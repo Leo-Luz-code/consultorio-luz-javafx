@@ -14,20 +14,30 @@ import java.util.Set;
 import gui.listener.DataChangeListener;
 import gui.util.Constraints;
 import gui.util.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 import model.entities.Paciente;
+import model.entities.Serviço;
 import model.exceptions.ValidationException;
 import model.services.PacienteService;
+import model.services.ServiçoService;
 
 public class PacienteFormController implements Initializable {
 
 	private PacienteService service;
+
+	private ServiçoService serviçoService;
 
 	private Paciente entity;
 
@@ -55,6 +65,9 @@ public class PacienteFormController implements Initializable {
 	private TextField txtCobrança;
 
 	@FXML
+	private ComboBox<Serviço> comboBoxServiço;
+
+	@FXML
 	private Label labelErrorNome;
 
 	@FXML
@@ -80,6 +93,8 @@ public class PacienteFormController implements Initializable {
 
 	@FXML
 	private Button btCancelar;
+
+	private ObservableList<Serviço> obsList;
 
 	@FXML
 	public void onBtSalvarAction(ActionEvent event) {
@@ -159,12 +174,13 @@ public class PacienteFormController implements Initializable {
 
 		if (dpDataCadastro.getValue() == null) {
 			exception.addError("dataCadastro", "O campo não pode ser vazio");
-		}
-		else {
+		} else {
 			Instant instant = Instant.from(dpDataCadastro.getValue().atStartOfDay(ZoneId.systemDefault()));
 			pct.setDataCadastro((Date.from(instant)));
 		}
 
+		pct.setServiço(comboBoxServiço.getValue());
+		
 		if (exception.getErrors().size() > 0) {
 			throw exception;
 		}
@@ -172,8 +188,9 @@ public class PacienteFormController implements Initializable {
 		return pct;
 	}
 
-	public void setPacienteService(PacienteService service) {
+	public void setServices(PacienteService service, ServiçoService serviçoService) {
 		this.service = service;
+		this.serviçoService = serviçoService;
 	}
 
 	public void setPaciente(Paciente entity) {
@@ -192,6 +209,8 @@ public class PacienteFormController implements Initializable {
 		Constraints.setTextFieldInteger(txtCpf);
 		Constraints.setTextFieldDouble(txtCobrança);
 		Utils.formatDatePicker(dpDataCadastro, "dd/MM/yyyy");
+		
+		initializeComboBoxServiço();
 	}
 
 	@Override
@@ -210,10 +229,25 @@ public class PacienteFormController implements Initializable {
 		txtTelefone.setText(String.valueOf(entity.getTelefone()));
 		txtCpf.setText(entity.getCpf());
 		txtCobrança.setText(String.format("%.2f", entity.getCobrança()));
-		
+
 		if (entity.getDataCadastro() != null) {
 			dpDataCadastro.setValue(LocalDate.ofInstant(entity.getDataCadastro().toInstant(), ZoneId.systemDefault()));
 		}
+		
+		if (entity.getServiço() == null) {
+			comboBoxServiço.getSelectionModel().selectFirst();
+		} else {
+			comboBoxServiço.setValue(entity.getServiço());
+		}
+	}
+
+	public void loadAssociatedObjects() {
+		if (serviçoService == null)
+			throw new IllegalStateException("ServiçoService nulo");
+
+		List<Serviço> list = serviçoService.findAll();
+		obsList = FXCollections.observableArrayList(list);
+		comboBoxServiço.setItems(obsList);
 	}
 
 	private void setErrorMessages(Map<String, String> errors) {
@@ -242,4 +276,17 @@ public class PacienteFormController implements Initializable {
 		}
 
 	}
+
+	private void initializeComboBoxServiço() {
+		Callback<ListView<Serviço>, ListCell<Serviço>> factory = lv -> new ListCell<Serviço>() {
+			@Override
+			protected void updateItem(Serviço item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : item.getNome());
+			}
+		};
+		comboBoxServiço.setCellFactory(factory);
+		comboBoxServiço.setButtonCell(factory.call(null));
+	}
+
 }

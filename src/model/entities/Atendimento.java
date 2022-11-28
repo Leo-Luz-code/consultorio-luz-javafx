@@ -12,14 +12,14 @@ public class Atendimento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private String nomePaciente;
+	private Paciente paciente;
 	private Double valorCobrado;
 	private Serviço serviço;
 	private Date dataAtendimento;
 	
-	public Atendimento(Integer id, String paciente, Double valorCobrado, Serviço serviço, Date dataAtendimento) {
+	public Atendimento(Integer id, Paciente paciente, Double valorCobrado, Serviço serviço, Date dataAtendimento) {
 		this.id = id;
-		this.nomePaciente = paciente;
+		this.paciente = paciente;
 		this.valorCobrado=valorCobrado;
 		this.serviço = serviço;
 		this.dataAtendimento = dataAtendimento;
@@ -28,8 +28,8 @@ public class Atendimento implements Serializable {
 	public Atendimento() {
 	}
 
-	public Atendimento(String paciente, Serviço serviço, Date date) {
-		this.nomePaciente = paciente;
+	public Atendimento(Paciente paciente, Serviço serviço, Date date) {
+		this.paciente = paciente;
 		this.serviço = serviço;
 		this.dataAtendimento = date;
 	}
@@ -42,12 +42,12 @@ public class Atendimento implements Serializable {
 		this.id = id;
 	}
 
-	public String getPaciente() {
-		return nomePaciente;
+	public Paciente getPaciente() {
+		return paciente;
 	}
 
-	public void setPaciente(String paciente) {
-		this.nomePaciente = paciente;
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 
 	public Serviço getServiço() {
