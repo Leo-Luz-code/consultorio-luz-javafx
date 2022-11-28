@@ -2,7 +2,6 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -32,7 +31,6 @@ import javafx.stage.Stage;
 import model.entities.Atendimento;
 import model.entities.Paciente;
 import model.entities.Serviço;
-import model.entities.ServiçoUnico;
 import model.services.AtendimentoService;
 
 public class ListaAtendimentoController implements Initializable, DataChangeListener {

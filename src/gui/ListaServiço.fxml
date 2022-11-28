@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="412.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListaServiçoController">
+<VBox prefHeight="420.0" prefWidth="753.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ListaServiçoController">
    <children>
       <Label alignment="TOP_LEFT" prefHeight="0.0" prefWidth="160.0" text="Serviços">
          <font>
@@ -18,6 +18,9 @@
          <padding>
             <Insets left="5.0" top="5.0" />
          </padding>
+         <VBox.margin>
+            <Insets left="300.0" />
+         </VBox.margin>
       </Label>
       <ToolBar prefHeight="0.0" prefWidth="543.0" snapToPixel="false">
         <items>
@@ -26,7 +29,9 @@
       </ToolBar>
       <TableView fx:id="tableViewServiço" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnNome" prefWidth="120.0" text="Nome" />
+          <TableColumn fx:id="tableColumnId" prefWidth="48.0" text="ID" />
+            <TableColumn fx:id="tableColumnNome" prefWidth="162.0" text="Nome do serviço" />
+            <TableColumn fx:id="tableColumnREMOVE" prefWidth="63.0" />
         </columns>
       </TableView>
    </children>

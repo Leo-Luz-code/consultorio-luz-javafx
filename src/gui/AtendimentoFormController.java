@@ -17,9 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Atendimento;
-import model.entities.Paciente;
-import model.entities.Serviço;
-import model.entities.ServiçoUnico;
 import model.exceptions.ValidationException;
 import model.services.AtendimentoService;
 

@@ -3,49 +3,41 @@ package model.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Serviço implements Serializable {
+public class Serviço implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private String nome;
-	private Double preco;
+	private Integer id;
 	
-	public Serviço(String nome) {
-		this.nome=nome;
-	}
-
-	public abstract Double precoTotal();
-	
-	public Serviço(String nome, Double preco) {
+	public Serviço(String nome, Integer id) {
 		this.nome = nome;
-		this.preco = preco;
+		this.id = id;
 	}
 	
 	public Serviço() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public String getNome() {
 		return nome;
 	}
-
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Double getPreco() {
-		return preco;
+	
+	public Integer getId() {
+		return id;
 	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
+	
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override
 	public String toString() {
 		return nome;
 	}
-	
-	
 	
 }
