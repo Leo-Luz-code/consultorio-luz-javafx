@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -15,13 +16,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Paciente;
 import model.entities.Serviço;
@@ -69,9 +75,8 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 	@FXML
 	public void onBtNovoAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		Paciente obj = new Paciente(null, "", "", null, new Date());
-//		createDialogForm(obj, "/gui/PacienteForm.fxml", parentStage);
-
+		Paciente obj = new Paciente(null, "", "", Long.parseLong("0"), new Date(), new Serviço("", null), null);
+		createDialogForm(obj, "/gui/PacienteForm.fxml", parentStage);
 	}
 
 	public void setPacienteService(PacienteService service) {
@@ -95,7 +100,7 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 		Utils.formatTableColumnDate(tableColumnDataCadastro, "dd/MM/yyyy");
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewPaciente.prefHeightProperty().bind(stage.heightProperty());
-//		initEditButtons();
+		initEditButtons();
 		initRemoveButtons();
 	}
 
@@ -105,28 +110,28 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 		tableViewPaciente.setItems(obsList);
 	}
 
-//	private void createDialogForm(Paciente obj, String absoluteName, Stage parentStage) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//			Pane pane = loader.load();
-//
-//			PacienteFormController controller = loader.getController();
-//			controller.setPaciente(obj);
-//			controller.setPacienteService(new PacienteService());
-//			controller.subscribeDataChangeListener(this);
-//			controller.updateFormData();
-//
-//			Stage dialogStage = new Stage();
-//			dialogStage.setTitle("Digite os dados do paciente");
-//			dialogStage.setScene(new Scene(pane));
-//			dialogStage.setResizable(false);
-//			dialogStage.initOwner(parentStage);
-//			dialogStage.initModality(Modality.WINDOW_MODAL);
-//			dialogStage.showAndWait();
-//		} catch (IOException e) {
-//			Alerts.showAlert("IO Exception", "Erro carregando página", e.getMessage(), AlertType.ERROR);
-//		}
-//	}
+	private void createDialogForm(Paciente obj, String absoluteName, Stage parentStage) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			Pane pane = loader.load();
+
+			PacienteFormController controller = loader.getController();
+			controller.setPaciente(obj);
+			controller.setPacienteService(new PacienteService());
+			controller.subscribeDataChangeListener(this);
+			controller.updateFormData();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Digite os dados do paciente");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "Erro carregando página", e.getMessage(), AlertType.ERROR);
+		}
+	}
 
 	@Override
 	public void onDataChange() {
@@ -145,24 +150,24 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 		}
 	}
 
-//	private void initEditButtons() {
-//		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-//		tableColumnEDIT.setCellFactory(param -> new TableCell<Paciente, Paciente>() {
-//			private final Button button = new Button("edit");
-//
-//			@Override
-//			protected void updateItem(Paciente obj, boolean empty) {
-//				super.updateItem(obj, empty);
-//				if (obj == null) {
-//					setGraphic(null);
-//					return;
-//				}
-//				setGraphic(button);
-//				button.setOnAction(
-//						event -> createDialogForm(obj, "/gui/PacienteForm.fxml", Utils.currentStage(event)));
-//			}
-//		});
-//	}
+	private void initEditButtons() {
+		tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEDIT.setCellFactory(param -> new TableCell<Paciente, Paciente>() {
+			private final Button button = new Button("edit");
+
+			@Override
+			protected void updateItem(Paciente obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(
+						event -> createDialogForm(obj, "/gui/PacienteForm.fxml", Utils.currentStage(event)));
+			}
+		});
+	}
 
 	private void initRemoveButtons() {
 		tableColumnREMOVE.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));

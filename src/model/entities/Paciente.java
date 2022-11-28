@@ -14,6 +14,18 @@ public class Paciente implements Serializable {
 	private Serviço serviço;
 	private Double cobrança;
 	
+	public Paciente(Integer id, String cpf, String nome, Long telefone, Date dataCadastro, Serviço serviço,
+			Double cobrança) {
+		super();
+		this.id = id;
+		this.cpf = cpf;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.dataCadastro = dataCadastro;
+		this.serviço = serviço;
+		this.cobrança = cobrança;
+	}
+
 	public Paciente(Integer id, String cpf, String nome, Long telefone, Date dataCadastro) {
 		this.id = id;
 		this.cpf = cpf;

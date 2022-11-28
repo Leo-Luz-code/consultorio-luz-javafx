@@ -44,6 +44,12 @@ public class PacienteFormController implements Initializable {
 	private TextField txtDataCadastro;
 
 	@FXML
+	private TextField txtServiço;
+
+	@FXML
+	private TextField txtCobrança;
+
+	@FXML
 	private Label labelErrorNome;
 
 	@FXML
@@ -56,10 +62,16 @@ public class PacienteFormController implements Initializable {
 	private Label labelErrorCpf;
 
 	@FXML
-	private Button btSalvar;
-	
+	private Label labelErrorCobrança;
+
 	@FXML
-	private Button btDeletar;
+	private Label labelErrorTelefone;
+
+	@FXML
+	private Label labelErrorServiço;
+
+	@FXML
+	private Button btSalvar;
 
 	@FXML
 	private Button btCancelar;
@@ -99,7 +111,7 @@ public class PacienteFormController implements Initializable {
 			setErrorMessages(e.getErrors());
 		}
 	}
-	
+
 	private void notifyDataCadastroChangeListeners() {
 		for (DataChangeListener listener : dataChangeListeners) {
 			listener.onDataChange();
@@ -115,32 +127,36 @@ public class PacienteFormController implements Initializable {
 		Paciente pct = new Paciente();
 		ValidationException exception = new ValidationException("Erro de validação");
 
-		
 		pct.setId(Utils.tryParseToInt(txtId.getText()));
 		if (txtId.getText() == null || txtNome.getText().trim().equals("")) {
 			exception.addError("id", "O campo não pode ser vazio");
 		}
-		
+
 		pct.setNome(txtNome.getText());
 		if (txtNome.getText() == null || txtNome.getText().trim().equals("")) {
 			exception.addError("nome", "O campo não pode ser vazio");
 		}
-		
-		pct.setTelefone(Utils.tryParseToLong(txtCpf.getText()));
+
+		pct.setCobrança(Utils.tryParseToDouble(txtCobrança.getText()));
+		if (txtId.getText() == null || txtNome.getText().trim().equals("")) {
+			exception.addError("cobrança", "O campo não pode ser vazio");
+		}
+
+		pct.setTelefone(Utils.tryParseToLong(txtTelefone.getText()));
 		if (txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
 			exception.addError("telefone", "O campo não pode ser vazio");
 		}
-		
+
 		pct.setCpf(txtCpf.getText());
 		if (txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
 			exception.addError("cpf", "O campo não pode ser vazio");
 		}
-		
+
 //		pct.setDataCadastro(txtDataCadastro.getText());
 //		if (txtDataCadastro.getText() == null || txtDataCadastro.getText().trim().equals("")) {
 //			exception.addError("dataCadastro", "O campo não pode ser vazio");
 //		}
-		
+
 		if (exception.getErrors().size() > 0) {
 			throw exception;
 		}
@@ -176,7 +192,7 @@ public class PacienteFormController implements Initializable {
 		if (entity == null) {
 			throw new IllegalStateException("Paciente nulo");
 		}
-		
+
 		txtId.setText(String.valueOf(entity.getId()));
 		txtNome.setText(entity.getNome());
 		txtTelefone.setText(String.valueOf(entity.getTelefone()));
@@ -190,19 +206,25 @@ public class PacienteFormController implements Initializable {
 		if (fields.contains("nome")) {
 			labelErrorNome.setText(errors.get("nome"));
 		}
-		
+
 		if (fields.contains("dataCadastro")) {
 			labelErrorDataCadastro.setText(errors.get("dataCadastro"));
 		}
 		if (fields.contains("id")) {
 			labelErrorId.setText(errors.get("id"));
 		}
-		if (fields.contains("cpf")) {
-			labelErrorCpf.setText(errors.get("preço"));
+		if (fields.contains("cobrança")) {
+			labelErrorCobrança.setText(errors.get("cobrança"));
+		}
+		if (fields.contains("telefone")) {
+			labelErrorTelefone.setText(errors.get("telefone"));
 		}
 		if (fields.contains("cpf")) {
 			labelErrorCpf.setText(errors.get("cpf"));
-
 		}
+		if (fields.contains("serviço")) {
+			labelErrorServiço.setText(errors.get("serviço"));
+		}
+
 	}
 }
