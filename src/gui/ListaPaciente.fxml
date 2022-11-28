@@ -32,7 +32,7 @@
           <TableColumn fx:id="tableColumnId" prefWidth="39.0" text="ID" />
             <TableColumn fx:id="tableColumnNome" prefWidth="121.0" text="Nome do paciente" />
             <TableColumn fx:id="tableColumnCpf" prefWidth="102.0" text="CPF" />
-            <TableColumn fx:id="tableColumnServiço" prefWidth="115.0" text="Serviço" />
+            <TableColumn fx:id="tableColumnServiço" prefWidth="115.0" text="Serviço" visible="false" />
             <TableColumn fx:id="tableColumnDataCadastro" prefWidth="104.0" text="Data de cadastro" />
             <TableColumn fx:id="tableColumnTelefone" prefWidth="97.0" text="Telefone" />
             <TableColumn fx:id="tableColumnCobrança" prefWidth="91.0" text="Cobrança" />

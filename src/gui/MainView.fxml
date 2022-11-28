@@ -4,11 +4,13 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="688.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
    <content>
-      <VBox prefHeight="200.0" prefWidth="283.0">
+      <VBox prefHeight="439.0" prefWidth="681.0">
          <children>
             <MenuBar prefHeight="25.0" prefWidth="362.0">
               <menus>
@@ -26,6 +28,11 @@
                 </Menu>
               </menus>
             </MenuBar>
+            <ImageView fx:id="consultorioLuzImageView" fitHeight="416.0" fitWidth="695.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@ConsultorioLuz.png" />
+               </image>
+            </ImageView>
          </children>
       </VBox>
    </content>

@@ -14,14 +14,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import model.data.impl.AtendimentoArquivo;
 import model.services.AtendimentoService;
 import model.services.PacienteService;
 import model.services.ServiçoService;
 
 public class MainViewController implements Initializable{
 
+	@FXML
+	private ImageView consultorioLuzImageView;
+	
+	private Image consultorioLuzImage = new Image(getClass().getResourceAsStream("ConsultorioLuz.png"));
+	
 	@FXML
 	private MenuItem menuItemPaciente;
 	
@@ -56,8 +62,11 @@ public class MainViewController implements Initializable{
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		// TODO Auto-generated method stub
-		
+		displayImage();
+	}
+	
+	public void displayImage() {
+		consultorioLuzImageView.setImage(consultorioLuzImage);
 	}
 
 	private synchronized void loadView4(String absoluteName) {

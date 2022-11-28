@@ -43,10 +43,10 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 
 	@FXML
 	private TableColumn<Paciente, Integer> tableColumnId;
-	
+
 	@FXML
 	private TableColumn<Paciente, Serviço> tableColumnServiço;
-	
+
 	@FXML
 	private TableColumn<Paciente, Double> tableColumnCobrança;
 
@@ -64,7 +64,7 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 
 	@FXML
 	private TableColumn<Paciente, Paciente> tableColumnEDIT;
-	
+
 	@FXML
 	private TableColumn<Paciente, Paciente> tableColumnREMOVE;
 
@@ -106,9 +106,14 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 	}
 
 	public void updateTableView() {
+		if (service == null) {
+			throw new IllegalStateException("PacienteServiço nulo");
+		}
 		List<Paciente> list = service.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewPaciente.setItems(obsList);
+		initEditButtons();
+		initRemoveButtons();
 	}
 
 	private void createDialogForm(Paciente obj, String absoluteName, Stage parentStage) {
@@ -165,8 +170,7 @@ public class ListaPacienteController implements Initializable, DataChangeListene
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction(
-						event -> createDialogForm(obj, "/gui/PacienteForm.fxml", Utils.currentStage(event)));
+				button.setOnAction(event -> createDialogForm(obj, "/gui/PacienteForm.fxml", Utils.currentStage(event)));
 			}
 		});
 	}

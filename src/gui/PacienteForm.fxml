@@ -40,7 +40,7 @@
             <Label text="CPF:" GridPane.rowIndex="2" />
             <Label text="Telefone:" GridPane.rowIndex="3" />
             <Label text="Cobrança:" GridPane.rowIndex="4" />
-            <Label prefHeight="17.0" prefWidth="46.0" text="Serviço:" textAlignment="CENTER" GridPane.rowIndex="5" />
+            <Label prefHeight="17.0" prefWidth="46.0" text="Serviço:" textAlignment="CENTER" visible="false" GridPane.rowIndex="5" />
             <Label text="Cadastrado em:" GridPane.rowIndex="6" />
             <Label fx:id="labelErrorNome" prefHeight="17.0" prefWidth="0.0" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label fx:id="labelErrorCpf" prefHeight="17.0" prefWidth="0.0" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -50,7 +50,7 @@
             <Label fx:id="labelErrorDataCadastro" prefHeight="17.0" prefWidth="0.0" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <Label fx:id="labelErrorId" prefHeight="17.0" prefWidth="0.0" textFill="RED" GridPane.columnIndex="2" />
             <DatePicker fx:id="dpDataCadastro" prefHeight="25.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <ComboBox fx:id="comboBoxServiço" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="comboBoxServiço" prefWidth="150.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <HBox layoutX="132.0" layoutY="236.0" prefHeight="41.0" prefWidth="178.0" spacing="5.0">
